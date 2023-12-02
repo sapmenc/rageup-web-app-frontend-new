@@ -7,6 +7,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Link,
   Text,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
@@ -20,6 +21,9 @@ interface HeadcardProps {
 }
 const Headcard: React.FC<HeadcardProps> = ({ data }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentResumeLink, setCurrentResumeLink] = useState<string>(
+    data?.resumeLink || ""
+  );
   console.log("profilePicture", data.profilePicture);
   return (
     <>
@@ -96,18 +100,33 @@ const Headcard: React.FC<HeadcardProps> = ({ data }) => {
               </Flex>
 
               <Flex justifyContent={"space-between"} alignItems={"center"}>
-                <Button
-                  alignSelf={"center"}
-                  backgroundColor={RAGE_UP_RED}
-                  color={"white"}
-                  _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
-                  minW={32}
-                  mr={3}
-                  rounded={"full"}
-                  size={"sm"}
+                <Link
+                  w={"full"}
+                  fontWeight={"bold"}
+                  href={currentResumeLink || undefined}
+                  target="_blank"
                 >
-                  Download Resume
-                </Button>
+                  <Button
+                    alignSelf={"center"}
+                    backgroundColor={
+                      currentResumeLink ? RAGE_UP_RED : "gray.300"
+                    }
+                    color={"white"}
+                    _hover={{
+                      backgroundColor: currentResumeLink
+                        ? RAGE_UP_RED_HOVER
+                        : "gray.300",
+                    }}
+                    minW={32}
+                    mr={3}
+                    rounded={"full"}
+                    size={"sm"}
+                    cursor={currentResumeLink ? "pointer" : "default"}
+                  >
+                    Download Resume
+                  </Button>
+                </Link>
+
                 <Flex flexDir={"column"} alignItems={"center"}>
                   <Text color={"#343434"} fontSize={"xs"}>
                     Rageup Score

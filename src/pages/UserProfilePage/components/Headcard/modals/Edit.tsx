@@ -73,7 +73,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
     (data?.city as string) || null
   );
 
-  let [currentResumeLink, setCurrentResumeLink] = useState<string>(
+  const [currentResumeLink, setCurrentResumeLink] = useState<string>(
     data?.resumeLink || ""
   );
   const {
@@ -115,8 +115,6 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         resumeUrl = await resumeUploadFile();
       }
 
-      console.log("imgRes", purl);
-      console.log("final resume link", resumeUrl);
       let body: any = {
         name,
         gender,
@@ -291,7 +289,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                     <Link
                       w={"full"}
                       fontWeight={"bold"}
-                      href={currentResumeLink || ""}
+                      href={currentResumeLink || undefined}
                       target="_blank"
                     >
                       <Flex>
