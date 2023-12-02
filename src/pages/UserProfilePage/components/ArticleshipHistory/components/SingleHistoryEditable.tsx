@@ -17,6 +17,7 @@ const SingleHistoryEditable: React.FC<SingleHistoryEditableProps> = ({
     <>
       {isOpen && (
         <EditSingle
+          history={history}
           isOpen={isOpen}
           onClose={() => {
             setIsOpen(false);

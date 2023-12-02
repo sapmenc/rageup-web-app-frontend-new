@@ -23,17 +23,40 @@ import firmRatings from "../utils/firmRating";
 interface EditSingleProps {
   isOpen: boolean;
   onClose: () => void;
+  // eslint-disable-next-line
+  history: any;
 }
 
-const EditSingle: React.FC<EditSingleProps> = ({ isOpen, onClose }) => {
-  const [firmName, setFirmName] = useState<string | null>(null);
-  const [department, setDepartment] = useState<string | null>(null);
-  const [subDepartment, setSubDepartment] = useState<string | null>(null);
-  const [stateDate, setStartDate] = useState<string | null>(null);
-  const [scheme, setScheme] = useState<string | null>(null);
-  const [location, setLocation] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [firmRating, setFirmRating] = useState<string | null>(null);
+const EditSingle: React.FC<EditSingleProps> = ({
+  isOpen,
+  onClose,
+  history,
+}) => {
+  console.log("history", history);
+  const [firmName, setFirmName] = useState<string | null>(
+    history ? history.firmName : null
+  );
+  const [department, setDepartment] = useState<string | null>(
+    history ? history.department : null
+  );
+  const [subDepartment, setSubDepartment] = useState<string | null>(
+    history ? history.subDepartment : null
+  );
+  const [stateDate, setStartDate] = useState<string | null>(
+    history ? history.startDate : null
+  );
+  const [scheme, setScheme] = useState<string | null>(
+    history ? history.articleScheme : null
+  );
+  const [location, setLocation] = useState<string | null>(
+    history ? history.location : null
+  );
+  const [description, setDescription] = useState<string | null>(
+    history ? history.description : null
+  );
+  const [firmRating, setFirmRating] = useState<string | null>(
+    history ? history.firmRating : null
+  );
   const handleSave = () => {
     const body = {
       firmName,

@@ -158,6 +158,7 @@ const Add: React.FC<AddProps> = ({ isOpen, onClose, cookies }) => {
           variant: "subtle",
         });
         onClose();
+        window.location.reload();
       })
       .catch(function (error) {
         toast({
