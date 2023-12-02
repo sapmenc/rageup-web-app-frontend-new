@@ -1,8 +1,10 @@
 import { useCookies } from "react-cookie";
 import { getUserById } from "../api/user";
+import { useLocation } from "react-router-dom";
+import { EXPERIENCE_PAGE_REGEX } from "../utils/regex/patterns";
 const useFields = () => {
   const [cookies] = useCookies(["myCookie"]);
-
+  const route = useLocation().pathname;
   const isMadatoryFilled = () => {
     // eslint-disable-next-line
     // @ts-ignore
@@ -60,9 +62,10 @@ const useFields = () => {
         const articleshipHistory = data?.articleshipHistory;
         // pass 5
         if (
-          !articleshipHistory ||
-          !Array.isArray(articleshipHistory) ||
-          articleshipHistory.length < 1
+          !EXPERIENCE_PAGE_REGEX.test(route) &&
+          (!articleshipHistory ||
+            !Array.isArray(articleshipHistory) ||
+            articleshipHistory.length < 1)
         ) {
           console.log("pass 5");
           return false;

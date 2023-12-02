@@ -1,4 +1,5 @@
 export const USER_PROFILE_PAGE_REGEX = /^\/users\/\w+/;
+export const EXPERIENCE_PAGE_REGEX = /^\/users\/[a-f\d]{24}\/experience$/;
 export const VACANCY_PAGE_REGEX = /^\/vacancies/;
 export const SPECIFIC_VACANCY_PAGE_REGEX = /^\/vacancies\/\w+/;
 export const LEARNING_PAGE_REGEX = /^\/learning/;
