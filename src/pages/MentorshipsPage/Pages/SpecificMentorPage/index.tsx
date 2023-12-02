@@ -6,6 +6,7 @@ import {
   GridItem,
   Heading,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import PageLayout from "../../../../layouts/PageLayout";
 import {
@@ -13,20 +14,47 @@ import {
   RAGE_UP_RED,
   RAGE_UP_RED_HOVER,
 } from "../../../../foundations/colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldCheckLayout from "../../../../layouts/FieldCheckLayout";
 import useAuth from "../../../../hooks/useAuth";
+import { getMentorById } from "../../../../api/mentor";
 
 const SpecificMentorPage = () => {
   useAuth();
+  const toast = useToast();
   const navigate = useNavigate();
   const pageLocation = useLocation();
+  const route = pageLocation.pathname;
+  const mentorId = route.split("/")[3];
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const onBookNow = () => {
-    const route = pageLocation.pathname;
     navigate(`${route}/booking`);
   };
+  const [data, setData] = useState<any>();
+  useEffect(() => {
+    getMentorById(mentorId)
+      .then(function (res) {
+        console.log("res", res.data.data);
+        setData(res.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: "Error in Articleship history deletion",
+          position: "top",
+          status: "error",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        console.log("Error in user data fetch:", error);
+      });
+  }, []);
+
+  const strengths =
+    data?.strengths && Array.isArray(data.strengths) ? data.strengths : [];
+  const skills = data?.skills && Array.isArray(data.skills) ? data.skills : [];
+  const exp = data?.exp && Array.isArray(data.exp) ? data.exp : [];
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -67,7 +95,7 @@ const SpecificMentorPage = () => {
           >
             {/* mentor name */}
             <Heading size="lg" textAlign={"center"}>
-              Mentor Name
+              {data?.mentorName || ""}
             </Heading>
 
             <Flex flexDir={"column"} gap={14} alignItems={"center"} w={"100%"}>
@@ -78,81 +106,105 @@ const SpecificMentorPage = () => {
                   name="Segun Adebayo"
                   src="https://bit.ly/sage-adebayo"
                 />
-                <Flex flexDir={"column"} alignItems={"center"}>
-                  <Text fontSize="md">Strategic Consulting</Text>
-                  <Text fontSize="md">Valuation</Text>
-                </Flex>
+                {strengths.length > 0 && (
+                  <Flex flexDir={"column"} alignItems={"center"}>
+                    {/* eslint-disable-next-line */}
+                    {/* @ts-ignore */}
+                    {strengths.map((strength, index) => {
+                      return (
+                        <Text key={index} fontSize="md">
+                          {strength}
+                        </Text>
+                      );
+                    })}
+                  </Flex>
+                )}
               </Flex>
 
               {/* Skills Mastered */}
-              <Flex flexDir={"column"} gap={4} w={"100%"}>
-                <Heading size="md" textAlign={"center"}>
-                  Skills Mastered
-                </Heading>
-                <Grid
-                  gap={5}
-                  gridTemplateColumns={{
-                    base: "repeat(1, 1fr)",
-                    sm: "repeat(2, 1fr)",
-                  }}
-                  color={"#60677A"}
-                >
-                  {[1, 2, 3, 4].map(() => {
-                    return (
-                      <GridItem
-                        py={2}
-                        px={8}
-                        backgroundColor={RAGE_UP_LIGHT_RED}
-                        rounded={"full"}
-                        fontWeight={"bold"}
-                        minW={40}
-                        textAlign={"center"}
-                      >
-                        Valuations
-                      </GridItem>
-                    );
-                  })}
-                </Grid>
-              </Flex>
+              {skills.length > 0 && (
+                <Flex flexDir={"column"} gap={4} w={"100%"}>
+                  <Heading size="md" textAlign={"center"}>
+                    Skills Mastered
+                  </Heading>
+                  <Grid
+                    gap={5}
+                    gridTemplateColumns={{
+                      base: "repeat(1, 1fr)",
+                      sm: "repeat(2, 1fr)",
+                    }}
+                    color={"#60677A"}
+                  >
+                    {/* eslint-disable-next-line */}
+                    {/* @ts-ignore */}
+                    {skills.map((skill, index) => {
+                      return (
+                        <GridItem
+                          key={index}
+                          py={2}
+                          px={8}
+                          backgroundColor={RAGE_UP_LIGHT_RED}
+                          rounded={"full"}
+                          fontWeight={"bold"}
+                          minW={40}
+                          textAlign={"center"}
+                        >
+                          {skill}
+                        </GridItem>
+                      );
+                    })}
+                  </Grid>
+                </Flex>
+              )}
 
               {/* Experience */}
-              <Flex flexDir={"column"} gap={4} w={"100%"}>
-                <Heading size="md" textAlign={"center"}>
-                  Experience
-                </Heading>
-                <Grid
-                  gap={5}
-                  gridTemplateColumns={{
-                    base: "repeat(1, 1fr)",
-                  }}
-                  color={"#60677A"}
-                >
-                  {[1, 2].map(() => {
-                    return (
-                      <GridItem
-                        py={4}
-                        px={8}
-                        backgroundColor={RAGE_UP_LIGHT_RED}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                        w={"100%"}
-                        display={"flex"}
-                        flexDirection={"column"}
-                        gap={2}
-                      >
-                        <Flex justifyContent={"space-between"}>
-                          <Text fontWeight={"bold"}>Valuations</Text>
-                          <Text fontWeight={"light"}>Nov,22</Text>
-                        </Flex>
-                        <Flex flexDir={"column"}>
-                          <Text fontWeight={"light"}>Assistant Manager</Text>
-                          <Text fontWeight={"light"}>Transaction Square</Text>
-                        </Flex>
-                      </GridItem>
-                    );
-                  })}
-                </Grid>
-              </Flex>
+              {exp.length > 0 && (
+                <Flex flexDir={"column"} gap={4} w={"100%"}>
+                  <Heading size="md" textAlign={"center"}>
+                    Experience
+                  </Heading>
+                  <Grid
+                    gap={5}
+                    gridTemplateColumns={{
+                      base: "repeat(1, 1fr)",
+                    }}
+                    color={"#60677A"}
+                  >
+                    {/* eslint-disable-next-line */}
+                    {/* @ts-ignore */}
+                    {exp.map((e, index) => {
+                      return (
+                        <GridItem
+                          key={index}
+                          py={4}
+                          px={8}
+                          backgroundColor={RAGE_UP_LIGHT_RED}
+                          rounded={"xl"}
+                          fontWeight={"semibold"}
+                          w={"100%"}
+                          display={"flex"}
+                          flexDirection={"column"}
+                          gap={2}
+                        >
+                          <Flex justifyContent={"space-between"}>
+                            <Text fontWeight={"bold"}>
+                              {e?.department || ""}
+                            </Text>
+                          </Flex>
+                          <Flex flexDir={"column"}>
+                            <Text fontWeight={"light"}>
+                              {e?.designation || ""}
+                            </Text>
+                            <Text fontWeight={"light"}>
+                              {e?.companyName || ""}
+                            </Text>
+                          </Flex>
+                        </GridItem>
+                      );
+                    })}
+                  </Grid>
+                </Flex>
+              )}
 
               {/* Qualifications */}
               <Flex flexDir={"column"} gap={4} w={"100%"}>

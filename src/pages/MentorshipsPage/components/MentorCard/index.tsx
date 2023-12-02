@@ -18,19 +18,22 @@ interface MentorCardProps {
   mentorName: string;
   image: string;
   strengths: [string, string?];
+  mentorId: any;
 }
 const MentorCard: React.FC<MentorCardProps> = ({
   mentorName,
   image,
   strengths,
+  mentorId,
 }) => {
+  console.log("mentor id", mentorId);
   const navigate = useNavigate();
   return (
     <Card maxW="md">
       <CardHeader
         cursor={"pointer"}
         onClick={() => {
-          navigate("/mentorships/mentor/1");
+          navigate(`/mentorships/mentor/${mentorId}`);
         }}
       >
         <Flex gap="4" alignItems={"center"} w={"100%"}>
