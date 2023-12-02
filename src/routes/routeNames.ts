@@ -1,0 +1,15 @@
+export const HOME = "/";
+export const MAIN = "/main";
+export const LOGIN = "/login";
+export const SIGNUP = "/signup";
+export const SPECIFIC_USER = "/users/:id";
+export const EXPERIENCE = "/users/:id/experience";
+export const VACANCIES = "/vacancies";
+export const SPECIFIC_VACANCY = "/vacancies/:id";
+export const LEARNINGS = "/learnings";
+export const MENTORSHIPS = "/mentorships";
+export const SPECIFIC_MENTOR = "/mentorships/mentor/:id";
+export const MENTOR_BOOKING = "/mentorships/mentor/:id/booking";
+export const PRIVACY_POLICY = "/privacy-policy";
+export const TERMS_AND_CONDITIONS = "/terms-and-conditions";
+export const REFUND_POLICY = "/refund-policy";
