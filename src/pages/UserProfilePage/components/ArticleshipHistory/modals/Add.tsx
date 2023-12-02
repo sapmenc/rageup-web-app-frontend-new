@@ -44,6 +44,97 @@ const Add: React.FC<AddProps> = ({ isOpen, onClose, cookies }) => {
   const userId = cookies.get("user")?._id;
   const token = cookies.get("authToken");
   const handleSave = () => {
+    if (!firmName) {
+      toast({
+        title: "Firm Name required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!department) {
+      toast({
+        title: "Department required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!startDate) {
+      toast({
+        title: "Start Date required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!completionDate) {
+      toast({
+        title: "Completion Date required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!scheme) {
+      toast({
+        title: "Scheme required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!location) {
+      toast({
+        title: "Location required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!description) {
+      toast({
+        title: "Description required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!firmRating) {
+      toast({
+        title: "Firm Rating required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     const body = {
       startDate,
       firmName,
@@ -72,7 +163,7 @@ const Add: React.FC<AddProps> = ({ isOpen, onClose, cookies }) => {
         toast({
           title: "Error in Articleship history creation",
           position: "top",
-          status: "success",
+          status: "error",
           duration: 1000,
           isClosable: true,
           variant: "subtle",

@@ -171,11 +171,16 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                   py={2}
                   flexDirection={{
                     base: "column",
-                    md: "row",
                   }}
                   flexWrap={"wrap"}
                 >
-                  <Text w={"100%"} fontWeight={"bold"}>
+                  <Text
+                    w={"100%"}
+                    fontSize={"sm"}
+                    fontWeight={"bold"}
+                    textAlign={"center"}
+                    mb={5}
+                  >
                     {uploadedFile?.name || data?.profilePicture}
                   </Text>
                   <FormLabel
@@ -277,16 +282,20 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                 <Flex
                   w={"100%"}
                   alignItems={"center"}
-                  justifyContent={"space-between"}
+                  // justifyContent={"space-between"}
                   gap={2}
                   py={2}
                   flexDirection={{
                     base: "column",
-                    md: "row",
                   }}
                   flexWrap={"wrap"}
                 >
-                  <Text w={"100%"} fontWeight={"bold"}>
+                  <Text
+                    w={"100%"}
+                    fontSize={"sm"}
+                    fontWeight={"bold"}
+                    textAlign={"center"}
+                  >
                     {resumeFile ? resumeFile.name : "No file chosen"}
                   </Text>
                   <FormLabel
