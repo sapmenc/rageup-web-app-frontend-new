@@ -61,76 +61,76 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
     getInputProps: getUploaderInputProps,
     file: uploadedFile,
     uploadedUrl,
-    // uploadFile: handleUploadFile,
+    uploadFile: handleUploadFile,
   } = useMediaUploader();
 
   // eslint-disable-next-line
-  // const handleSave = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (!name) {
-  //       toast({
-  //         title: "Name Required!",
-  //         position: "top",
-  //         status: "error",
-  //         duration: 1000,
-  //         isClosable: true,
-  //         variant: "subtle",
-  //       });
-  //       return;
-  //     }
-  //     if (!srn) {
-  //       toast({
-  //         title: "SRN Required!",
-  //         position: "top",
-  //         status: "error",
-  //         duration: 1000,
-  //         isClosable: true,
-  //         variant: "subtle",
-  //       });
-  //       return;
-  //     }
-  //     const purl = await handleUploadFile();
-  //     if (purl) {
-  //       console.log("imgRes", purl);
-  //       const body = {
-  //         name,
-  //         gender,
-  //         headline,
-  //         srn,
-  //         linkedinProfileLink,
-  //         state,
-  //         city,
-  //         profilePicture: purl,
-  //       };
-  //       const res = await updateUserProfile(userId, body, token);
-  //       if (res.status === 200) {
-  //         toast({
-  //           title: "User data updated successfully",
-  //           position: "top",
-  //           status: "success",
-  //           duration: 1000,
-  //           isClosable: true,
-  //           variant: "subtle",
-  //         });
-  //         onClose();
-  //       }
-  //     }
-  //   } catch (err) {
-  //     toast({
-  //       title: "Error in user data updation",
-  //       position: "top",
-  //       status: "success",
-  //       duration: 1000,
-  //       isClosable: true,
-  //       variant: "subtle",
-  //     });
-  //     console.log("Error in user data fetch:", err);
-  //     onClose();
-  //   } finally {
-  //     window.location.reload();
-  //   }
-  // };
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    try {
+      if (!name) {
+        toast({
+          title: "Name Required!",
+          position: "top",
+          status: "error",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        return;
+      }
+      if (!srn) {
+        toast({
+          title: "SRN Required!",
+          position: "top",
+          status: "error",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        return;
+      }
+      const purl = await handleUploadFile();
+      if (purl) {
+        console.log("imgRes", purl);
+        const body = {
+          name,
+          gender,
+          headline,
+          srn,
+          linkedinProfileLink,
+          state,
+          city,
+          profilePicture: purl,
+        };
+        const res = await updateUserProfile(userId, body, token);
+        if (res.status === 200) {
+          toast({
+            title: "User data updated successfully",
+            position: "top",
+            status: "success",
+            duration: 1000,
+            isClosable: true,
+            variant: "subtle",
+          });
+          onClose();
+        }
+      }
+    } catch (err) {
+      toast({
+        title: "Error in user data updation",
+        position: "top",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+        variant: "subtle",
+      });
+      console.log("Error in user data fetch:", err);
+      onClose();
+    } finally {
+      window.location.reload();
+    }
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -320,7 +320,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
               bgColor: "rgba(51,130,84)",
             }}
             rounded={"full"}
-            // onClick={handleSave}
+            onClick={handleSave}
           >
             Save Details
           </Button>
