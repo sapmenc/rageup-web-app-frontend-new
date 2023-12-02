@@ -27,7 +27,7 @@ const SpecificMentorPage = () => {
   const pageLocation = useLocation();
   const route = pageLocation.pathname;
   const mentorId = route.split("/")[3];
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  // const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const onBookNow = () => {
     navigate(`${route}/booking`);
   };
@@ -55,6 +55,12 @@ const SpecificMentorPage = () => {
     data?.strengths && Array.isArray(data.strengths) ? data.strengths : [];
   const skills = data?.skills && Array.isArray(data.skills) ? data.skills : [];
   const exp = data?.exp && Array.isArray(data.exp) ? data.exp : [];
+  const qualifications =
+    data?.qualifications && Array.isArray(data.qualifications)
+      ? data.qualifications
+      : [];
+  const story = data?.story || "";
+  const video = data?.videoUrl || null;
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -207,110 +213,94 @@ const SpecificMentorPage = () => {
               )}
 
               {/* Qualifications */}
-              <Flex flexDir={"column"} gap={4} w={"100%"}>
-                <Heading size="md" textAlign={"center"}>
-                  Qualifications
-                </Heading>
-                <Grid
-                  gap={5}
-                  gridTemplateColumns={{
-                    base: "repeat(1, 1fr)",
-                  }}
-                  color={"#60677A"}
-                >
-                  {[1, 2].map(() => {
-                    return (
-                      <GridItem
-                        py={4}
-                        px={8}
-                        backgroundColor={RAGE_UP_LIGHT_RED}
-                        rounded={"xl"}
-                        fontWeight={"semibold"}
-                        w={"100%"}
-                        display={"flex"}
-                        flexDirection={"column"}
-                        gap={2}
-                      >
-                        <Text fontWeight={"bold"} textAlign={"center"}>
-                          Chartered Accountant
-                        </Text>
+              {qualifications.length > 0 && (
+                <Flex flexDir={"column"} gap={4} w={"100%"}>
+                  <Heading size="md" textAlign={"center"}>
+                    Qualifications
+                  </Heading>
+                  <Grid
+                    gap={5}
+                    gridTemplateColumns={{
+                      base: "repeat(1, 1fr)",
+                    }}
+                    color={"#60677A"}
+                  >
+                    {/* eslint-disable-next-line */}
+                    {/* @ts-ignore */}
+                    {qualifications.map((qualification, index) => {
+                      return (
+                        <GridItem
+                          key={index}
+                          py={4}
+                          px={8}
+                          backgroundColor={RAGE_UP_LIGHT_RED}
+                          rounded={"xl"}
+                          fontWeight={"semibold"}
+                          w={"100%"}
+                          display={"flex"}
+                          flexDirection={"column"}
+                          gap={2}
+                        >
+                          <Text fontWeight={"bold"} textAlign={"center"}>
+                            {qualification?.title || ""}
+                          </Text>
 
-                        <Text fontWeight={"light"} textAlign={"center"}>
-                          Institute of Chartered Accountants of India
-                        </Text>
-                      </GridItem>
-                    );
-                  })}
-                </Grid>
-              </Flex>
+                          <Text fontWeight={"light"} textAlign={"center"}>
+                            {qualification?.institute || ""}
+                          </Text>
+                        </GridItem>
+                      );
+                    })}
+                  </Grid>
+                </Flex>
+              )}
 
               {/* My Story */}
-              <Flex flexDir={"column"} gap={4} w={"100%"}>
-                <Heading size="md" textAlign={"center"}>
-                  My Story
-                </Heading>
-                {/* story text */}
-                <Text
-                  color={"#343434"}
-                  fontSize={"xs"}
-                  noOfLines={isExpanded ? 0 : 3}
-                >
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Tempora odio expedita laudantium dicta officia ea voluptas
-                  voluptatem, praesentium doloremque, sint rem ex voluptates
-                  minima! Dicta voluptatibus velit vel culpa doloribus
-                  temporibus magni rem nesciunt, asperiores corrupti cumque modi
-                  suscipit sequi obcaecati ipsum ratione totam tempora natus
-                  aperiam commodi, ad sed molestias. Pariatur necessitatibus ad
-                  fugit consectetur debitis, sed rerum rem officia? Incidunt
-                  debitis beatae consequuntur architecto mollitia laboriosam
-                  eveniet earum temporibus maxime voluptate, esse, est totam nam
-                  rem natus reiciendis quibusdam, ipsa velit ipsum? Quos nisi
-                  consequatur enim aut aliquid! Error explicabo maxime dolorem
-                  debitis numquam. Facilis expedita soluta ducimus repellendus.
-                  Culpa provident sapiente tempora ex eum. Voluptate eos vel
-                  facilis? Eligendi earum eveniet, obcaecati fugit mollitia
-                  voluptates hic ex! Eos laudantium esse, accusamus quae ad
-                  omnis, sapiente autem dolorem ipsam excepturi eius dicta
-                  deleniti eligendi voluptatibus corporis veniam soluta ipsa
-                  corrupti consequuntur tempore quas? Voluptatum aut hic nobis
-                  nisi adipisci numquam accusamus odit odio natus dignissimos?
-                  Nihil facere libero sapiente! Incidunt voluptatum doloremque
-                  praesentium reiciendis tenetur eaque cumque, itaque unde at
-                  odio iure ab eum possimus, ullam suscipit? Maiores modi
-                  similique hic nulla cumque! Porro culpa, magnam unde
-                  accusantium atque quia ad. Libero alias accusamus quia vel,
-                  unde dignissimos!
-                </Text>
-                <Text
-                  color={"#343434"}
-                  fontSize={"xs"}
-                  display={"inline"}
-                  cursor={"pointer"}
-                  fontWeight={"bold"}
-                  _hover={{
-                    textDecoration: "underline",
-                  }}
-                  onClick={() => {
-                    setIsExpanded((prev) => !prev);
-                  }}
-                >
-                  {isExpanded ? "Show Less" : "Read More"}
-                </Text>
-              </Flex>
+              {story && (
+                <Flex flexDir={"column"} gap={4} w={"100%"}>
+                  <Heading size="md" textAlign={"center"}>
+                    My Story
+                  </Heading>
+                  {/* story text */}
+                  <Text
+                    color={"#343434"}
+                    fontSize={"xs"}
+                    // noOfLines={isExpanded ? 0 : 3}
+                  >
+                    {story}
+                  </Text>
+                  {/* <Text
+                    color={"#343434"}
+                    fontSize={"xs"}
+                    display={"inline"}
+                    cursor={"pointer"}
+                    fontWeight={"bold"}
+                    _hover={{
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => {
+                      setIsExpanded((prev) => !prev);
+                    }}
+                  >
+                    {isExpanded ? "Show Less" : "Read More"}
+                  </Text> */}
+                </Flex>
+              )}
 
               {/* Video */}
-              <Flex rounded={"2xl"} overflow={"hidden"}>
-                <Flex w={"90vw"} maxW={"lg"} aspectRatio={16 / 9}>
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/S5EpsMjel-M?si=hlDSWRlPxzLPQqRD"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  />
+              {video && (
+                <Flex rounded={"2xl"} overflow={"hidden"}>
+                  <Flex w={"90vw"} maxW={"lg"} aspectRatio={16 / 9}>
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={video}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    />
+                  </Flex>
                 </Flex>
-              </Flex>
+              )}
 
               {/* book */}
               <Button
