@@ -42,10 +42,10 @@ const SignUpPage = () => {
       let body = {
         name: res.data.name,
         email: res.data.email,
-      }
+      };
 
       const res2 = await googleAuth(body);
-      if (res2.status == 200 || res2.status == 201) {
+      if (res2.status === 200 || res2.status === 201) {
         setCookie("authToken", res2.data.data.token, {
           path: "/",
           // Expires after 1 day

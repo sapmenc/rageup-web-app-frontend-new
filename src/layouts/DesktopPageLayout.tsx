@@ -39,7 +39,7 @@ const GetNavbar = () => {
   } else if (
     routeName === MAIN ||
     routeName === LOGIN ||
-    routeName == SIGNUP ||
+    routeName === SIGNUP ||
     routeName === PRIVACY_POLICY ||
     routeName === TERMS_AND_CONDITIONS ||
     routeName === REFUND_POLICY

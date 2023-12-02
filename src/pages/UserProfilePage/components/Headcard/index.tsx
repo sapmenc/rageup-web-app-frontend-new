@@ -20,6 +20,7 @@ interface HeadcardProps {
 }
 const Headcard: React.FC<HeadcardProps> = ({ data }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  console.log("profilePicture", data.profilePicture);
   return (
     <>
       {isOpen && (
@@ -41,7 +42,7 @@ const Headcard: React.FC<HeadcardProps> = ({ data }) => {
         // maxH={"580px"}
       >
         <Flex direction={"column"} height={"100%"} py={2}>
-          <Avatar size={"lg"} />
+          <Avatar size={"lg"} src={data?.profilePicture} />
           <Flex justifyContent={"space-between"} alignItems={"center"} px={2}>
             {/* HEADER */}
             <CardHeader pl={0}>

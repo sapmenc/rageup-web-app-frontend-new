@@ -32,7 +32,7 @@ const LoginPage = () => {
       };
 
       const res2 = await googleAuth(body);
-      if (res2.status == 200) {
+      if (res2.status === 200) {
         setCookie("authToken", res2.data.data.token, {
           path: "/",
           // Expires after 1 day
@@ -92,7 +92,7 @@ const LoginPage = () => {
       };
       // api calling
       const res = await signin(body);
-      if (res.status == 200) {
+      if (res.status === 200) {
         setCookie("authToken", res.data.data.token, {
           path: "/",
           // Expires after 1 day

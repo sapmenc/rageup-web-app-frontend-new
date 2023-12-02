@@ -91,30 +91,31 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         return;
       }
       const purl = await handleUploadFile();
+
+      console.log("imgRes", purl);
+      let body: any = {
+        name,
+        gender,
+        headline,
+        srn,
+        linkedinProfileLink,
+        state,
+        city,
+      };
       if (purl) {
-        console.log("imgRes", purl);
-        const body = {
-          name,
-          gender,
-          headline,
-          srn,
-          linkedinProfileLink,
-          state,
-          city,
-          profilePicture: purl,
-        };
-        const res = await updateUserProfile(userId, body, token);
-        if (res.status === 200) {
-          toast({
-            title: "User data updated successfully",
-            position: "top",
-            status: "success",
-            duration: 1000,
-            isClosable: true,
-            variant: "subtle",
-          });
-          onClose();
-        }
+        body.purl = purl;
+      }
+      const res = await updateUserProfile(userId, body, token);
+      if (res.status === 200) {
+        toast({
+          title: "User data updated successfully",
+          position: "top",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        onClose();
       }
     } catch (err) {
       toast({
