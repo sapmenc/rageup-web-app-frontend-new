@@ -54,7 +54,7 @@ const ArticleshipHistory: React.FC<ArticleshipHistoryProps> = ({ data }) => {
             return (
               <React.Fragment key={key}>
                 {USER_PAGE_REGEX.test(routeName) ? (
-                  <SingleHistory />
+                  <SingleHistory history={history} />
                 ) : (
                   <SingleHistoryEditable history={history} />
                 )}
