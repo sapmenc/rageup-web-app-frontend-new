@@ -19,6 +19,7 @@ export interface OptionProps {
   label: string;
   pattern: RegExp;
   link: string;
+  cookies?: any;
 }
 export const mainOptions: OptionProps[] = [
   {
