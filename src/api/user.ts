@@ -18,3 +18,12 @@ export const updateUserProfile = async (id: any, body: any, token: string) => {
   });
   return res;
 };
+
+export const signout = async (data: any) => {
+  const res = await API_INSTANCE.post("/users/signout", data, {
+    headers: {
+      'Authorization': `Bearer ${data.token}`
+    }
+  })
+  return res
+}
