@@ -9,12 +9,12 @@ const RageupTest = () => {
         <Flex flexDir={"column"} gap={8}>
           <Flex flexDir={"column"} gap={2}>
             <Text color={"#343434"} fontSize={"xs"}>
-              This test is to help the firms determine the ranking of the
-              profile for the consideration of an articleship.
+              The Rageup test is a form of evaluation that measures your
+              critical thinking and problem-solving skills.
             </Text>
             <Text color={"#343434"} fontSize={"xs"}>
-              The test can be taken once every month. In order re-take a test
-              immediately, please take a subscription.
+              Take this test to increase your chances of being hired by the best
+              CA firms.
             </Text>
           </Flex>
           <Button
