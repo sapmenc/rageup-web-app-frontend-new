@@ -23,6 +23,7 @@ import schemes from "../utils/schemes";
 import firmRatings from "../utils/firmRating";
 import { updateArticleshipHistory } from "../../../../../api/articleshipHistory";
 import { withCookies } from "react-cookie";
+import DeleteModal from "./Delete";
 interface EditSingleProps {
   isOpen: boolean;
   onClose: () => void;
@@ -41,6 +42,7 @@ const EditSingle: React.FC<EditSingleProps> = ({
   const toast = useToast();
 
   console.log("history", history);
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [firmName, setFirmName] = useState<string | null>(
     history ? history.firmName : null
   );
@@ -201,135 +203,156 @@ const EditSingle: React.FC<EditSingleProps> = ({
       });
   };
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Edit Articleship History</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Flex flexDir={"column"} gap={4}>
-            {/* Firm Name */}
-            <StringInput
-              value={firmName}
-              onChange={setFirmName}
-              placeholder="Firm Name"
-            />
-            {/* deparment + location + subDepartment */}
-            <Flex gap={4}>
-              {/* department */}
-              <Select
-                w={"sm"}
-                placeholder="Department"
-                color={!department ? "gray.500" : "black"}
-                value={department ? department : ""}
-                onChange={(e) => {
-                  const d = e.target.value;
-                  if (!d) {
-                    setDepartment(null);
-                    setSubDepartment(null);
-                  } else {
-                    setDepartment(d);
-                    setSubDepartment(null);
-                  }
-                }}
-                {...rageupInputProps}
-              >
-                {Object.keys(departments).map((d, index) => {
-                  return (
-                    <option key={index} value={d}>
-                      {d}
-                    </option>
-                  );
-                })}
-              </Select>
-              {department && departments[department].length > 0 && (
+    <>
+      {isDeleteOpen && (
+        <DeleteModal
+          token={token}
+          historyId={history._id}
+          isOpen={isDeleteOpen}
+          onClose={() => {
+            setIsDeleteOpen(false);
+          }}
+        />
+      )}
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Articleship History</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex flexDir={"column"} gap={4}>
+              {/* Firm Name */}
+              <StringInput
+                value={firmName}
+                onChange={setFirmName}
+                placeholder="Firm Name"
+              />
+              {/* deparment + location + subDepartment */}
+              <Flex gap={4}>
+                {/* department */}
                 <Select
-                  color={!subDepartment ? "gray.500" : "black"}
                   w={"sm"}
-                  placeholder="Sub-Department"
-                  value={subDepartment ? subDepartment : ""}
+                  placeholder="Department"
+                  color={!department ? "gray.500" : "black"}
+                  value={department ? department : ""}
                   onChange={(e) => {
-                    const sd = e.target.value;
-                    if (!sd) {
+                    const d = e.target.value;
+                    if (!d) {
+                      setDepartment(null);
                       setSubDepartment(null);
                     } else {
-                      setSubDepartment(sd);
+                      setDepartment(d);
+                      setSubDepartment(null);
                     }
                   }}
                   {...rageupInputProps}
                 >
-                  {departments[department].map((sd, key) => {
+                  {Object.keys(departments).map((d, index) => {
                     return (
-                      <option key={key} value={sd}>
-                        {sd}
+                      <option key={index} value={d}>
+                        {d}
                       </option>
                     );
                   })}
                 </Select>
-              )}
+                {department && departments[department].length > 0 && (
+                  <Select
+                    color={!subDepartment ? "gray.500" : "black"}
+                    w={"sm"}
+                    placeholder="Sub-Department"
+                    value={subDepartment ? subDepartment : ""}
+                    onChange={(e) => {
+                      const sd = e.target.value;
+                      if (!sd) {
+                        setSubDepartment(null);
+                      } else {
+                        setSubDepartment(sd);
+                      }
+                    }}
+                    {...rageupInputProps}
+                  >
+                    {departments[department].map((sd, key) => {
+                      return (
+                        <option key={key} value={sd}>
+                          {sd}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </Flex>
+              {/* Start Date */}
+              <Flex alignItems={"center"} gap={2}>
+                <Text width={"fit-content"} whiteSpace={"nowrap"}>
+                  Start Date
+                </Text>
+                <DateCustom value={startDate} onChange={setStartDate} />
+              </Flex>
+              {/* Completion Date */}
+              <Flex alignItems={"center"} gap={2}>
+                <Text width={"fit-content"} whiteSpace={"nowrap"}>
+                  Completion Date
+                </Text>
+                <DateCustom
+                  value={completionDate}
+                  onChange={setCompletionDate}
+                />
+              </Flex>
+              {/* Scheme */}
+              <SelectCustom
+                list={schemes}
+                value={scheme}
+                onChange={setScheme}
+                placeholder="Articleship Scheme"
+              />
+              {/* Location */}
+              <StringInput
+                value={location}
+                onChange={setLocation}
+                placeholder={"Location (City, State, Country)"}
+              />
+              {/* Description */}
+              <StringTextArea
+                value={description}
+                onChange={setDescription}
+                placeholder="Description"
+              />
+              {/* Firm Rating */}
+              <SelectCustom
+                list={firmRatings}
+                value={firmRating}
+                onChange={setFirmRating}
+                placeholder="Firm Rating"
+              />
             </Flex>
-            {/* Start Date */}
-            <Flex alignItems={"center"} gap={2}>
-              <Text width={"fit-content"} whiteSpace={"nowrap"}>
-                Start Date
-              </Text>
-              <DateCustom value={startDate} onChange={setStartDate} />
-            </Flex>
-            {/* Completion Date */}
-            <Flex alignItems={"center"} gap={2}>
-              <Text width={"fit-content"} whiteSpace={"nowrap"}>
-                Completion Date
-              </Text>
-              <DateCustom value={completionDate} onChange={setCompletionDate} />
-            </Flex>
-            {/* Scheme */}
-            <SelectCustom
-              list={schemes}
-              value={scheme}
-              onChange={setScheme}
-              placeholder="Articleship Scheme"
-            />
-            {/* Location */}
-            <StringInput
-              value={location}
-              onChange={setLocation}
-              placeholder={"Location (City, State, Country)"}
-            />
-            {/* Description */}
-            <StringTextArea
-              value={description}
-              onChange={setDescription}
-              placeholder="Description"
-            />
-            {/* Firm Rating */}
-            <SelectCustom
-              list={firmRatings}
-              value={firmRating}
-              onChange={setFirmRating}
-              placeholder="Firm Rating"
-            />
-          </Flex>
-        </ModalBody>
+          </ModalBody>
 
-        <ModalFooter justifyContent={"space-between"} pt={8}>
-          <Button minW={32} variant="ghost">
-            Delete Experience
-          </Button>
-          <Button
-            px={8}
-            color={"white"}
-            bgColor={"#33a854"}
-            _hover={{
-              bgColor: "rgba(51,130,84)",
-            }}
-            rounded={"full"}
-            onClick={handleSave}
-          >
-            Save
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          <ModalFooter justifyContent={"space-between"} pt={8}>
+            <Button
+              minW={32}
+              variant="ghost"
+              onClick={() => {
+                setIsDeleteOpen(true);
+              }}
+            >
+              Delete Experience
+            </Button>
+            <Button
+              px={8}
+              color={"white"}
+              bgColor={"#33a854"}
+              _hover={{
+                bgColor: "rgba(51,130,84)",
+              }}
+              rounded={"full"}
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
