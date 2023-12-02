@@ -22,6 +22,7 @@ import SelectCustom from "../../../../../components/inputs/SelectCustom";
 import { updateUserProfile } from "../../../../../api/user";
 import { withCookies } from "react-cookie";
 import useMediaUploader from "../../../../../hooks/useMediaUploader";
+import ResumeUploader from "../ResumeUploader";
 
 interface EditProps {
   isOpen: boolean;
@@ -139,17 +140,10 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         <ModalHeader></ModalHeader>
         <ModalCloseButton />
         <ModalBody py={6}>
+          <ResumeUploader />
           <Flex flexDirection={"column"}>
             {/* dp */}
             <Flex flexDir={"column"} alignItems={"center"} w={"100%"} gap={4}>
-              {/* <Box boxSize="">
-                <Avatar
-                  size="2xl"
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
-                />
-              </Box>
-              <Button>Upload Image</Button> */}
               <Flex
                 flexDirection={"column"}
                 alignItems={"center"}
@@ -261,60 +255,6 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                   value={city}
                   onChange={setCity}
                 />
-              </Flex>
-              <Flex>
-                <Input
-                  id="file-input"
-                  name="file-input"
-                  border={"none"}
-                  w={"100%"}
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const file = e.target.files?.[0];
-                    if (file && file.type === "application/pdf") {
-                      setResumeFile(file);
-                    } else {
-                      alert("Please select a valid PDF file.");
-                    }
-                  }}
-                />
-                <Flex
-                  w={"100%"}
-                  alignItems={"center"}
-                  // justifyContent={"space-between"}
-                  gap={2}
-                  py={2}
-                  flexDirection={{
-                    base: "column",
-                  }}
-                  flexWrap={"wrap"}
-                >
-                  <Text
-                    w={"100%"}
-                    fontSize={"sm"}
-                    fontWeight={"bold"}
-                    textAlign={"center"}
-                  >
-                    {resumeFile ? resumeFile.name : "No file chosen"}
-                  </Text>
-                  <FormLabel
-                    flexShrink={0}
-                    cursor={"pointer"}
-                    id="file-input-label"
-                    // eslint-disable-next-line
-                    /* @ts-ignore */
-                    htmlFor="file-input"
-                    bgColor={RAGE_UP_RED}
-                    color={"white"}
-                    paddingY={1}
-                    paddingX={4}
-                    rounded={"lg"}
-                    fontWeight={"semibold"}
-                  >
-                    Upload Resume
-                  </FormLabel>
-                </Flex>
               </Flex>
             </Flex>
           </Flex>

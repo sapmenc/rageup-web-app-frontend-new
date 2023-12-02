@@ -1,4 +1,4 @@
-import React from "react";
+// ResumeUploader.js
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import useMediaUploader from "../../../../hooks/useMediaUploader";
 
@@ -22,7 +22,11 @@ const ResumeUploader = () => {
 
       <div {...getRootProps()} style={{ textAlign: "center" }}>
         <input {...getInputProps()} />
-        <p>{file ? `Selected File: ${file.name}` : "Drag 'n' drop your resume file here, or click to select a file"}</p>
+        <p>
+          {file
+            ? `Selected File: ${file.name}`
+            : "Drag 'n' drop your resume file here, or click to select a file"}
+        </p>
       </div>
 
       <Button
@@ -31,7 +35,6 @@ const ResumeUploader = () => {
         isLoading={isUploading}
         loadingText="Uploading..."
         onClick={uploadFile}
-        isDisabled={!file || isUploading}
       >
         Upload Resume
       </Button>
@@ -46,7 +49,7 @@ const ResumeUploader = () => {
         </Box>
       )}
 
-      <Button mt={4} onClick={resetUploader} isDisabled={!uploadedUrl}>
+      <Button mt={4} onClick={resetUploader}>
         Reset
       </Button>
     </Box>
