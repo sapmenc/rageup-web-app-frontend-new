@@ -103,7 +103,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         city,
       };
       if (purl) {
-        body.purl = purl;
+        body.profilePicture = purl;
       }
       const res = await updateUserProfile(userId, body, token);
       if (res.status === 200) {
