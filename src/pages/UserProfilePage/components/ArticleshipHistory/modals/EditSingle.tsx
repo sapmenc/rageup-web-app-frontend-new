@@ -11,6 +11,7 @@ import {
   Flex,
   Select,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import StringInput from "../../../../../components/inputs/StringInput";
 import rageupInputProps from "../../../../../helpers/rageupInputProps";
@@ -20,18 +21,25 @@ import SelectCustom from "../../../../../components/inputs/SelectCustom";
 import StringTextArea from "../../../../../components/inputs/StringTextArea";
 import schemes from "../utils/schemes";
 import firmRatings from "../utils/firmRating";
+import { updateArticleshipHistory } from "../../../../../api/articleshipHistory";
+import { withCookies } from "react-cookie";
 interface EditSingleProps {
   isOpen: boolean;
   onClose: () => void;
   // eslint-disable-next-line
   history: any;
+  // eslint-disable-next-line
+  cookies: any;
 }
 
 const EditSingle: React.FC<EditSingleProps> = ({
   isOpen,
   onClose,
   history,
+  cookies,
 }) => {
+  const toast = useToast();
+
   console.log("history", history);
   const [firmName, setFirmName] = useState<string | null>(
     history ? history.firmName : null
@@ -42,8 +50,11 @@ const EditSingle: React.FC<EditSingleProps> = ({
   const [subDepartment, setSubDepartment] = useState<string | null>(
     history ? history.subDepartment : null
   );
-  const [stateDate, setStartDate] = useState<string | null>(
+  const [startDate, setStartDate] = useState<string | null>(
     history ? history.startDate : null
+  );
+  const [completionDate, setCompletionDate] = useState<string | null>(
+    history ? history.completionDate : null
   );
   const [scheme, setScheme] = useState<string | null>(
     history ? history.articleScheme : null
@@ -57,18 +68,137 @@ const EditSingle: React.FC<EditSingleProps> = ({
   const [firmRating, setFirmRating] = useState<string | null>(
     history ? history.firmRating : null
   );
+  const token = cookies.get("authToken");
+
   const handleSave = () => {
+    if (!firmName) {
+      toast({
+        title: "Firm Name required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!department) {
+      toast({
+        title: "Department required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!startDate) {
+      toast({
+        title: "Start Date required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!completionDate) {
+      toast({
+        title: "Completion Date required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!scheme) {
+      toast({
+        title: "Scheme required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!location) {
+      toast({
+        title: "Location required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!description) {
+      toast({
+        title: "Description required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (!firmRating) {
+      toast({
+        title: "Firm Rating required",
+        position: "top-right",
+        description: "",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     const body = {
+      startDate,
       firmName,
       department,
       subDepartment,
-      stateDate,
-      scheme,
-      location,
-      description,
       firmRating,
+      articleScheme: scheme,
+      location,
+      completionDate,
+      description,
     };
     console.log(body);
+    updateArticleshipHistory(history._id, body, token)
+      .then(function () {
+        toast({
+          title: "Articleship history updated successfully",
+          position: "top",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        onClose();
+        window.location.reload();
+      })
+      .catch(function (error) {
+        toast({
+          title: "Error in Articleship history updation",
+          position: "top",
+          status: "error",
+          duration: 1000,
+          isClosable: true,
+          variant: "subtle",
+        });
+        console.log("Error in user data fetch:", error);
+        onClose();
+      });
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
@@ -143,7 +273,14 @@ const EditSingle: React.FC<EditSingleProps> = ({
               <Text width={"fit-content"} whiteSpace={"nowrap"}>
                 Start Date
               </Text>
-              <DateCustom value={stateDate} onChange={setStartDate} />
+              <DateCustom value={startDate} onChange={setStartDate} />
+            </Flex>
+            {/* Completion Date */}
+            <Flex alignItems={"center"} gap={2}>
+              <Text width={"fit-content"} whiteSpace={"nowrap"}>
+                Completion Date
+              </Text>
+              <DateCustom value={completionDate} onChange={setCompletionDate} />
             </Flex>
             {/* Scheme */}
             <SelectCustom
@@ -196,4 +333,4 @@ const EditSingle: React.FC<EditSingleProps> = ({
   );
 };
 
-export default EditSingle;
+export default withCookies(EditSingle);

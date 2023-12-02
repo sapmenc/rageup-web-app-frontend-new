@@ -248,7 +248,7 @@ const Add: React.FC<AddProps> = ({ isOpen, onClose, cookies }) => {
               </Text>
               <DateCustom value={startDate} onChange={setStartDate} />
             </Flex>
-            {/* Start Date */}
+            {/* Completion Date */}
             <Flex alignItems={"center"} gap={2}>
               <Text width={"fit-content"} whiteSpace={"nowrap"}>
                 Completion Date
