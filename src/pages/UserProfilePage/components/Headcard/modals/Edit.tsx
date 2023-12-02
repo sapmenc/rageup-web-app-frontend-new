@@ -14,15 +14,21 @@ import {
   Box,
   Avatar,
   useToast,
+  Link,
+  IconButton,
 } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
-import { RAGE_UP_RED } from "../../../../../foundations/colors";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  RAGE_UP_RED,
+  RAGE_UP_RED_HOVER,
+} from "../../../../../foundations/colors";
 import StringInput from "../../../../../components/inputs/StringInput";
 import SelectCustom from "../../../../../components/inputs/SelectCustom";
 import { updateUserProfile } from "../../../../../api/user";
 import { withCookies } from "react-cookie";
 import useMediaUploader from "../../../../../hooks/useMediaUploader";
 import ResumeUploader from "../ResumeUploader";
+import { CloseIcon } from "@chakra-ui/icons";
 
 interface EditProps {
   isOpen: boolean;
@@ -37,6 +43,16 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
   const toast = useToast();
   const userId = cookies.get("user")?._id;
   const token = cookies.get("authToken");
+  const {
+    getRootProps: resumeGetRootProps,
+    getInputProps: resumeGetInputProps,
+    file: resumeFile,
+    uploadedUrl: resumeUploadedUrl,
+    isUploading: resumeIsUploading,
+    uploadFile: resumeUploadFile,
+    copyToClipboard: resumeCopyToClipboard,
+    resetUploader: resumeResetUploader,
+  } = useMediaUploader();
   const [name, setName] = useState<string | null>(
     (data?.name as string) || null
   );
@@ -56,8 +72,10 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
   const [city, setCity] = useState<string | null>(
     (data?.city as string) || null
   );
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
 
+  let [currentResumeLink, setCurrentResumeLink] = useState<string>(
+    data?.resumeLink || ""
+  );
   const {
     getInputProps: getUploaderInputProps,
     file: uploadedFile,
@@ -92,8 +110,13 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         return;
       }
       const purl = await handleUploadFile();
+      let resumeUrl = null;
+      if (resumeFile) {
+        resumeUrl = await resumeUploadFile();
+      }
 
       console.log("imgRes", purl);
+      console.log("final resume link", resumeUrl);
       let body: any = {
         name,
         gender,
@@ -106,6 +129,13 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
       if (purl) {
         body.profilePicture = purl;
       }
+      if (resumeUrl) {
+        body.resumeLink = resumeUrl;
+      } else if (currentResumeLink) {
+      } else {
+        body.resumeLink = null;
+      }
+
       const res = await updateUserProfile(userId, body, token);
       if (res.status === 200) {
         toast({
@@ -122,7 +152,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
       toast({
         title: "Error in user data updation",
         position: "top",
-        status: "success",
+        status: "error",
         duration: 1000,
         isClosable: true,
         variant: "subtle",
@@ -140,7 +170,6 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
         <ModalHeader></ModalHeader>
         <ModalCloseButton />
         <ModalBody py={6}>
-          <ResumeUploader />
           <Flex flexDirection={"column"}>
             {/* dp */}
             <Flex flexDir={"column"} alignItems={"center"} w={"100%"} gap={4}>
@@ -254,6 +283,49 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                   placeholder="City"
                   value={city}
                   onChange={setCity}
+                />
+              </Flex>
+              <Flex flexDir={"column"} gap={3}>
+                {currentResumeLink && (
+                  <Flex gap={2} alignItems={"center"}>
+                    <Link
+                      w={"full"}
+                      fontWeight={"bold"}
+                      href={currentResumeLink || ""}
+                      target="_blank"
+                    >
+                      <Flex>
+                        <Button
+                          py={5}
+                          alignSelf={"center"}
+                          backgroundColor={RAGE_UP_RED}
+                          color={"white"}
+                          _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
+                          w={"full"}
+                          rounded={"xl"}
+                          size={"sm"}
+                        >
+                          Current Resume
+                        </Button>
+                      </Flex>
+                    </Link>
+                    <IconButton
+                      size={"sm"}
+                      aria-label="Clear resume"
+                      icon={<CloseIcon />}
+                      onClick={() => {
+                        setCurrentResumeLink("");
+                      }}
+                    />
+                  </Flex>
+                )}
+                <ResumeUploader
+                  uploadedUrl={resumeUploadedUrl}
+                  copyToClipboard={resumeCopyToClipboard}
+                  file={resumeFile}
+                  getInputProps={resumeGetInputProps}
+                  getRootProps={resumeGetRootProps}
+                  resetUploader={resumeResetUploader}
                 />
               </Flex>
             </Flex>
