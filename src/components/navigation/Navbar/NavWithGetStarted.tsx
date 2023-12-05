@@ -33,6 +33,7 @@ const NavWithGetStarted = () => {
         <DrawerOverlay />
         <DrawerContent>
           <Stack
+            bg={RAGE_UP_RED}
             direction={"column"}
             width={"100%"}
             height={"100vh"}

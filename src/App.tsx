@@ -32,6 +32,7 @@ import MentorBookingPage from "./pages/MentorshipsPage/Pages/MentorBookingPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 import ReturnPolicyPage from "./pages/RefundPolicyPage";
+import Logout from "./pages/logout";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path={HOME} element={<HomePage />} />
         <Route path={MAIN} element={<MainPage />} />
         <Route path={LOGIN} element={<LoginPage />} />
+        <Route path={"/logout"} element={<Logout />} />
         <Route path={SIGNUP} element={<SignUpPage />} />
 
         <Route path={SPECIFIC_USER} element={<UserProfilePage />} />

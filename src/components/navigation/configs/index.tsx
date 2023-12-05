@@ -49,11 +49,16 @@ export const mainOptions: OptionProps[] = [
 ];
 
 export const secondayOptions: OptionProps[] = [
+  // {
+  //   label: "Settings",
+  //   Icon: IoMdSettings,
+  //   pattern: SETTINGS_PAGE_REGEX,
+  //   link: "",
+  // },
   {
-    label: "Settings",
-    Icon: IoMdSettings,
-    pattern: SETTINGS_PAGE_REGEX,
-    link: "",
+    label: "Logout",
+    Icon: CiLogout,
+    pattern: /^(?!.)/, 
+    link: "/logout"
   },
-  { label: "Logout", Icon: CiLogout, pattern: /^(?!.)/, link: "" },
 ];
