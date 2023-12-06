@@ -35,18 +35,18 @@ const useFields = () => {
         }
 
         const educations = data?.educations;
+        const articleshipStatus = educations?.articleshipStatus || null;
+        const articleshipHistory = data?.articleshipHistory || [];
         // pass 3
         if (
           !educations ||
           !educations?.degree ||
-          !educations?.articleshipStatus ||
           !educations.score12 ||
           !educations?.score10
         ) {
           console.log("pass 3");
           return false;
         }
-
         // pass 4
         const articleshipCompliance = data?.articleshipCompliance;
         if (
@@ -59,18 +59,27 @@ const useFields = () => {
           return false;
         }
 
-        const articleshipHistory = data?.articleshipHistory;
         // pass 5
-        if (
-          !EXPERIENCE_PAGE_REGEX.test(route) &&
-          (!articleshipHistory ||
-            !Array.isArray(articleshipHistory) ||
-            articleshipHistory.length < 1)
-        ) {
+        if (!articleshipStatus) {
           console.log("pass 5");
           return false;
         }
+        if (
+          articleshipStatus !== "Fresher" &&
+          articleshipStatus !== "Transferred"
+        ) {
+          console.log("pass 6");
+          return false;
+        }
 
+        if (
+          articleshipStatus === "Transferred" &&
+          articleshipHistory.length < 1 &&
+          !EXPERIENCE_PAGE_REGEX.test(route)
+        ) {
+          console.log("pass 7");
+          return false;
+        }
         // Test should be mandatory
 
         return true;

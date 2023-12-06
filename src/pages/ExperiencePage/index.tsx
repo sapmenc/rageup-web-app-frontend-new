@@ -39,7 +39,12 @@ const ExperiencePage = (props: any) => {
     return <div>Loading</div>;
   }
   if (!isTransferred) {
-    return <div>access denied</div>;
+    return (
+      <div>
+        access denied - To access this page you need to set yout articleship
+        status to Transferred
+      </div>
+    );
   }
   return (
     <>

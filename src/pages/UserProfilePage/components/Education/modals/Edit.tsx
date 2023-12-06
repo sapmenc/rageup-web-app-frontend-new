@@ -107,17 +107,18 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
     //   });
     //   return;
     // }
-    if (!articleshipStatus) {
-      toast({
-        title: "Articleship Status Required!",
-        position: "top",
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-        variant: "subtle",
-      });
-      return;
-    }
+
+    // if (!articleshipStatus) {
+    //   toast({
+    //     title: "Articleship Status Required!",
+    //     position: "top",
+    //     status: "error",
+    //     duration: 1000,
+    //     isClosable: true,
+    //     variant: "subtle",
+    //   });
+    //   return;
+    // }
     if (!score12) {
       toast({
         title: "Scores in 12th Required!",
