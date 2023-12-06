@@ -109,8 +109,8 @@ const SpecificMentorPage = () => {
               <Flex flexDir={"column"} gap={2} alignItems={"center"}>
                 <Avatar
                   size="2xl"
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
+                  name={data?.mentorName || ""}
+                  src={data?.profilePicture || ""}
                 />
                 {strengths.length > 0 && (
                   <Flex flexDir={"column"} alignItems={"center"}>
@@ -265,7 +265,7 @@ const SpecificMentorPage = () => {
                   <Text
                     color={"#343434"}
                     fontSize={"xs"}
-                    // noOfLines={isExpanded ? 0 : 3}
+                  // noOfLines={isExpanded ? 0 : 3}
                   >
                     {story}
                   </Text>
