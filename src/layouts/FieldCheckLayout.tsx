@@ -50,7 +50,7 @@ const FieldCheckLayout: React.FC<FieldCheckLayoutProps> = ({ children }) => {
         </Text>
 
         <Button
-          zIndex={9999}
+          zIndex={999}
           size={"md"}
           rounded={"lg"}
           backgroundColor={RAGE_UP_RED}
