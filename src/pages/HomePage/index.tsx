@@ -13,10 +13,10 @@ import LandingFooter from "../../components/LandingPageComponent/LandingFooter";
 import { NavWithGetStarted } from "../../components/navigation/Navbar";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../foundations/colors";
 import useTitle from "../../hooks/useTitle";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { setTitle } = useTitle();
   setTitle("RageUp");
   return (
@@ -121,7 +121,9 @@ const HomePage = () => {
                     backgroundColor={RAGE_UP_RED}
                     color={"white"}
                     _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate("/main");
+                    }}
                   >
                     Explore Rageup
                   </Button>
