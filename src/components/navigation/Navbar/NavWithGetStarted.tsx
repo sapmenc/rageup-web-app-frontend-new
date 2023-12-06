@@ -1,7 +1,11 @@
 import {
   Button,
+  Divider,
   Drawer,
+  DrawerBody,
+  DrawerCloseButton,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
   Flex,
   Image,
@@ -31,13 +35,12 @@ const NavWithGetStarted = () => {
     <>
       <Drawer isOpen={isOpen} placement={"left"} onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent>
-          <Stack
+        <DrawerContent             bg={RAGE_UP_RED}>
+          {/* <Stack
             bg={RAGE_UP_RED}
             direction={"column"}
             width={"100%"}
             height={"100vh"}
-            justifyContent={"space-between"}
             alignItems={"center"}
             py={10}
           >
@@ -45,18 +48,46 @@ const NavWithGetStarted = () => {
               <Button
                 key={link.name}
                 variant={"link"}
-                color={"black"}
+                color={"white"}
                 fontWeight={700}
                 transitionDuration={"100"}
                 _hover={{ backgroundColor: RAGE_UP_LIGHT_RED_HOVER }}
                 onClick={() => {
                   navigate(link.link);
                 }}
+                my={'30px'}
               >
                 {link.name}
               </Button>
             ))}
-          </Stack>
+          </Stack> */}
+                    <DrawerCloseButton color={'white'}/>
+          <DrawerHeader display={"flex"} justifyContent={"center"}>
+            <Image src={RAGE_UP_WHITE_LOGO} h={36} />
+          </DrawerHeader>
+          <DrawerBody display={"flex"} flexDir={"column"} gap={3}>
+            <Divider color={"white"} h={1} />
+
+            {/* main options */}
+            <Flex flexDir={"column"} alignItems={"center"} gap={3}>
+            {LANDING_LINKS.map((link) => (
+              <Button
+                key={link.name}
+                variant={"link"}
+                color={"white"}
+                fontWeight={700}
+                transitionDuration={"100"}
+                _hover={{ backgroundColor: RAGE_UP_LIGHT_RED_HOVER }}
+                onClick={() => {
+                  navigate(link.link);
+                }}
+                my={'30px'}
+              >
+                {link.name}
+              </Button>
+            ))}
+            </Flex>
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
       <Flex
@@ -96,6 +127,20 @@ const NavWithGetStarted = () => {
             </Button>
           ))}
         </Stack>
+        <Button
+          display={["block", "block", "block", "none"]}
+          rounded={"full"}
+          backgroundColor={RAGE_UP_LIGHT_RED}
+          color={"black"}
+          fontWeight={700}
+          transitionDuration={"100"}
+          _hover={{ backgroundColor: RAGE_UP_LIGHT_RED_HOVER }}
+          onClick={() => {
+            navigate(MAIN);
+          }}
+        >
+          Get Started
+        </Button>
         <HamburgerIcon
           display={["block", "block", "block", "none"]}
           onClick={() => {
