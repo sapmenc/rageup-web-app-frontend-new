@@ -108,17 +108,17 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
     //   return;
     // }
 
-    // if (!articleshipStatus) {
-    //   toast({
-    //     title: "Articleship Status Required!",
-    //     position: "top",
-    //     status: "error",
-    //     duration: 1000,
-    //     isClosable: true,
-    //     variant: "subtle",
-    //   });
-    //   return;
-    // }
+    if (!articleshipStatus) {
+      toast({
+        title: "Articleship Status Required!",
+        position: "top",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+        variant: "subtle",
+      });
+      return;
+    }
     if (!score12) {
       toast({
         title: "Scores in 12th Required!",
@@ -130,17 +130,17 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
       });
       return;
     }
-    // if (!score10) {
-    //   toast({
-    //     title: "Scores in 10th Required!",
-    //     position: "top",
-    //     status: "error",
-    //     duration: 1000,
-    //     isClosable: true,
-    //     variant: "subtle",
-    //   });
-    //   return;
-    // }
+    if (!score10) {
+      toast({
+        title: "Scores in 10th Required!",
+        position: "top",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+        variant: "subtle",
+      });
+      return;
+    }
     const body = {
       educations: {
         degree,
