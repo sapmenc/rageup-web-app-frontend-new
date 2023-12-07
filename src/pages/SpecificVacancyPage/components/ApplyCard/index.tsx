@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
 import { withCookies } from "react-cookie";
+import { updateApplicantByVacancyId} from "../../../../api/vacancy";
 
 interface ApplyCardProps {
   // eslint-disable-next-line
@@ -21,24 +22,32 @@ interface ApplyCardProps {
   vacancyId: string;
   cookies: any;
 }
-const onStartTest = () => {
+
+const onApply = async(vId:any,uId:any) => {
+  try{
+    let body={
+      uId: uId
+    }
+    let res = await updateApplicantByVacancyId(vId,body);
+    console.log(res)
+  }catch(err){
+    console.log(err)
+  }
+};
+
+const onStartTest = (vId:any,uId:any) => {
   console.log("test started");
   // applied at the end
-  onApply();
+  onApply(vId,uId);
 };
-const onApply = () => {
 
-};
 const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
   const { data, vacancyId, cookies } = props;
-  console.log(data, vacancyId, cookies);
   const user = cookies.cookies.user
     ? JSON.parse(cookies.cookies.user)
     : undefined;
   const userId = user?._id;
-  const authToken = cookies?.cookies?.authToken;
-
-  console.log(user, userId, authToken);
+  // const authToken = cookies?.cookies?.authToken;
   const isTestAssigned = data.isTestAssigned as boolean;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
@@ -76,7 +85,7 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
                 _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
                 onClick={() => {
                   setIsOpen(false);
-                  onStartTest();
+                  onStartTest(vacancyId,userId);
                 }}
               >
                 Start Test
@@ -127,7 +136,7 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
                 if (isTestAssigned) {
                   setIsOpen(true);
                 } else {
-                  onApply();
+                  onApply(vacancyId,userId);
                 }
               }}
             >

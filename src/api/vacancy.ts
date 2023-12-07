@@ -20,8 +20,13 @@ export const getVacancyById = async (id: any) => {
   return res;
 };
 
-export const updateVacancy = async (id: any, body: any) => {
+export const updateVacancyById = async (id: any, body: any) => {
   const res = await API_INSTANCE.patch(`/vacancy/${id}`, body);
+  return res;
+};
+
+export const updateApplicantByVacancyId = async (id: any, body: any) => {
+  const res = await API_INSTANCE.patch(`/vacancy/applicant/${id}`, body);
   return res;
 };
 
