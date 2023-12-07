@@ -33,6 +33,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 import ReturnPolicyPage from "./pages/RefundPolicyPage";
 import Logout from "./pages/logout";
+import ContactUsPage from "./pages/ContactUsPage";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path={SPECIFIC_MENTOR} element={<SpecificMentorPage />} />
         <Route path={MENTOR_BOOKING} element={<MentorBookingPage />} />
         <Route path={PRIVACY_POLICY} element={<PrivacyPolicyPage />} />
+        <Route path={"contact"} element={<ContactUsPage />} />
         <Route
           path={TERMS_AND_CONDITIONS}
           element={<TermsAndConditionsPage />}
