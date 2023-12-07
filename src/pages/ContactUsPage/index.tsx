@@ -12,8 +12,8 @@ const ContactUsPage = () => {
                     </Heading>
                     <Flex flexDir={"column"} gap={5}>
                         <Text>
-                            Want to get in touch to ask a query? Hit us up at hire@rageup.in or +91 81494 20499.
-                            Operating Address: H-301, 24K Stargaze by Kolte-Patil Developers, Paud Road, Opp. Ambrosia Resort, Bavdhan, Pune - 411021
+                            Want to get in touch to ask a query? Hit us up at: <br/><br/>Email: <a href="mailto:hire@rageup.in">hire@rageup.in</a> <br/><br/>Phone: <a href="tel:81494 20499"> +91 81494 20499</a><br/><br/>
+                            Operating Address: H-301, 24K Stargaze by Kolte-Patil Developers, Paud Road, Opp. Ambrosia Resort, Bavdhan, Pune - 411021
                         </Text>
                     </Flex>
                 </Flex>
