@@ -24,7 +24,7 @@ const onStartTest = () => {
   onApply();
 };
 const onApply = () => {
-  console.log("applied");
+  
 };
 const ApplyCard: React.FC<ApplyCardProps> = ({ data }) => {
   const isTestAssigned = data.isTestAssigned as boolean;
