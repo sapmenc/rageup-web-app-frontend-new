@@ -13,10 +13,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
+import { withCookies } from "react-cookie";
 
 interface ApplyCardProps {
   // eslint-disable-next-line
   data: any;
+  vacancyId: string;
+  cookies: any;
 }
 const onStartTest = () => {
   console.log("test started");
@@ -24,9 +27,18 @@ const onStartTest = () => {
   onApply();
 };
 const onApply = () => {
-  
+
 };
-const ApplyCard: React.FC<ApplyCardProps> = ({ data }) => {
+const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
+  const { data, vacancyId, cookies } = props;
+  console.log(data, vacancyId, cookies);
+  const user = cookies.cookies.user
+    ? JSON.parse(cookies.cookies.user)
+    : undefined;
+  const userId = user?._id;
+  const authToken = cookies?.cookies?.authToken;
+
+  console.log(user, userId, authToken);
   const isTestAssigned = data.isTestAssigned as boolean;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
@@ -128,4 +140,4 @@ const ApplyCard: React.FC<ApplyCardProps> = ({ data }) => {
   );
 };
 
-export default ApplyCard;
+export default withCookies(ApplyCard);

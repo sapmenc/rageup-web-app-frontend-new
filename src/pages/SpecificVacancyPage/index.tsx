@@ -60,7 +60,10 @@ const SpecificVacancyPage = () => {
             </Heading>
             <Flex flexDirection={"column"} gap={16}>
               <Flex flexDirection={"column"} gap={4}>
-                <ApplyCard data={data} />
+                <ApplyCard
+                  data={data}
+                  vacancyId={vacancyId}
+                />
                 {data?.exposures && data?.exposures?.length > 0 && (
                   <ExposureInArticleship exposures={data?.exposures} />
                 )}
