@@ -13,9 +13,8 @@ export const SPECIFIC_VACANCY = "/vacancies/:id";
 
 // learnings
 export const LEARNINGS = "/learnings";
-export const COURSE_DETAIL = "/learnings/courses/:id/details";
-export const COURSE_TOPIC = "/learnings/courses/:id/topics";
-export const SPECIFIC_TOPIC = "/learnings/courses/:id/topics/:tid";
+export const COURSE_DETAIL = "/learnings/:id";
+export const SPECIFIC_SUBJECT = "/learnings/:id/:sid";
 
 // mentorships
 export const MENTORSHIPS = "/mentorships";

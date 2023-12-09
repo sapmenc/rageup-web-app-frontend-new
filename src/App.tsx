@@ -2,7 +2,6 @@ import "./App.css";
 import MainPage from "./pages/MainPage";
 import {
   COURSE_DETAIL,
-  COURSE_TOPIC,
   EXPERIENCE,
   HOME,
   LEARNINGS,
@@ -14,7 +13,7 @@ import {
   REFUND_POLICY,
   SIGNUP,
   SPECIFIC_MENTOR,
-  SPECIFIC_TOPIC,
+  SPECIFIC_SUBJECT,
   SPECIFIC_USER,
   SPECIFIC_VACANCY,
   TERMS_AND_CONDITIONS,
@@ -35,11 +34,9 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 import ReturnPolicyPage from "./pages/RefundPolicyPage";
 import Logout from "./pages/logout";
-import ContactUsPage from "./pages/ContactUsPage";
 import CourseDetailPage from "./domains/Learnings/pages/CourseDetailPage";
-import CourseTopicPage from "./domains/Learnings/pages/CourseTopicPage";
-import SpecificTopicPage from "./domains/Learnings/pages/SpecificTopicPage";
 import LearningsPage from "./domains/Learnings";
+import SpecificSubjectPage from "./domains/Learnings/pages/SpecificSubjectPage";
 
 function App() {
   return (
@@ -62,8 +59,7 @@ function App() {
         {/* learnings */}
         <Route path={LEARNINGS} element={<LearningsPage />} />
         <Route path={COURSE_DETAIL} element={<CourseDetailPage />} />
-        <Route path={COURSE_TOPIC} element={<CourseTopicPage />} />
-        <Route path={SPECIFIC_TOPIC} element={<SpecificTopicPage />} />
+        <Route path={SPECIFIC_SUBJECT} element={<SpecificSubjectPage />} />
 
         {/* mentorships */}
         <Route path={MENTORSHIPS} element={<MentorshipsPage />} />

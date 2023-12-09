@@ -17,6 +17,7 @@ import { Box } from "@chakra-ui/react";
 import { NAVBAR_HEIGHT } from "../utils/measurement";
 
 import {
+  specificLearningPageCheck,
   specificMentorPageCheck,
   specificVacancyPageCheck,
   usersProfilePageCheck,
@@ -50,6 +51,7 @@ const GetNavbar = () => {
     routeName === VACANCIES ||
     specificVacancyPageCheck(routeName) ||
     routeName === LEARNINGS ||
+    specificLearningPageCheck(routeName) ||
     routeName === MENTORSHIPS ||
     specificMentorPageCheck(routeName)
   ) {
@@ -64,6 +66,7 @@ const GetFooter = () => {
     routeName === VACANCIES ||
     specificVacancyPageCheck(routeName) ||
     routeName === LEARNINGS ||
+    specificLearningPageCheck(routeName) ||
     routeName === MENTORSHIPS ||
     specificMentorPageCheck(routeName) ||
     routeName === PRIVACY_POLICY ||

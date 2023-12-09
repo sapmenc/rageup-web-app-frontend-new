@@ -23,7 +23,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ data }) => {
       gap={2}
       cursor={"pointer"}
       onClick={() => {
-        navigate(`/learnings/courses/${id}/details`);
+        navigate(`/learnings/${id}`);
       }}
       w={"full"}
       maxW={"400px"}

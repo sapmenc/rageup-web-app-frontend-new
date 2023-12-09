@@ -2,7 +2,7 @@ import React from "react";
 import PageLayout from "../../../../layouts/PageLayout";
 import FieldCheckLayout from "../../../../layouts/FieldCheckLayout";
 
-const CourseDetailPage = () => {
+const SpecificSubjectPage = () => {
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -12,4 +12,4 @@ const CourseDetailPage = () => {
   );
 };
 
-export default CourseDetailPage;
+export default SpecificSubjectPage;
