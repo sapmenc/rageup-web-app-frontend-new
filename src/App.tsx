@@ -1,6 +1,8 @@
 import "./App.css";
 import MainPage from "./pages/MainPage";
 import {
+  COURSE_DETAIL,
+  COURSE_TOPIC,
   EXPERIENCE,
   HOME,
   LEARNINGS,
@@ -12,6 +14,7 @@ import {
   REFUND_POLICY,
   SIGNUP,
   SPECIFIC_MENTOR,
+  SPECIFIC_TOPIC,
   SPECIFIC_USER,
   SPECIFIC_VACANCY,
   TERMS_AND_CONDITIONS,
@@ -34,6 +37,9 @@ import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 import ReturnPolicyPage from "./pages/RefundPolicyPage";
 import Logout from "./pages/logout";
 import ContactUsPage from "./pages/ContactUsPage";
+import CourseDetailPage from "./domains/Learnings/pages/CourseDetailPage";
+import CourseTopicPage from "./domains/Learnings/pages/CourseTopicPage";
+import SpecificTopicPage from "./domains/Learnings/pages/SpecificTopicPage";
 
 function App() {
   return (
@@ -45,16 +51,27 @@ function App() {
         <Route path={"/logout"} element={<Logout />} />
         <Route path={SIGNUP} element={<SignUpPage />} />
 
+        {/* profile */}
         <Route path={SPECIFIC_USER} element={<UserProfilePage />} />
         <Route path={EXPERIENCE} element={<ExperiencePage />} />
+
+        {/* vacancies */}
         <Route path={VACANCIES} element={<VacanciesPage />} />
         <Route path={SPECIFIC_VACANCY} element={<SpecificVacancyPage />} />
+
+        {/* learnings */}
         <Route path={LEARNINGS} element={<LearningsPage />} />
+        <Route path={COURSE_DETAIL} element={<CourseDetailPage />} />
+        <Route path={COURSE_TOPIC} element={<CourseTopicPage />} />
+        <Route path={SPECIFIC_TOPIC} element={<SpecificTopicPage />} />
+
+        {/* mentorships */}
         <Route path={MENTORSHIPS} element={<MentorshipsPage />} />
         <Route path={SPECIFIC_MENTOR} element={<SpecificMentorPage />} />
         <Route path={MENTOR_BOOKING} element={<MentorBookingPage />} />
+
+        {/* others */}
         <Route path={PRIVACY_POLICY} element={<PrivacyPolicyPage />} />
-        <Route path={"contact"} element={<ContactUsPage />} />
         <Route
           path={TERMS_AND_CONDITIONS}
           element={<TermsAndConditionsPage />}
