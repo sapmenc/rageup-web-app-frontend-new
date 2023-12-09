@@ -27,7 +27,6 @@ import UserProfilePage from "./pages/UserProfilePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import VacanciesPage from "./pages/VacanciesPage";
 import MentorshipsPage from "./pages/MentorshipsPage";
-import LearningsPage from "./pages/LearningsPage";
 import SpecificVacancyPage from "./pages/SpecificVacancyPage";
 import ExperiencePage from "./pages/ExperiencePage";
 import SpecificMentorPage from "./pages/MentorshipsPage/Pages/SpecificMentorPage";
@@ -40,6 +39,7 @@ import ContactUsPage from "./pages/ContactUsPage";
 import CourseDetailPage from "./domains/Learnings/pages/CourseDetailPage";
 import CourseTopicPage from "./domains/Learnings/pages/CourseTopicPage";
 import SpecificTopicPage from "./domains/Learnings/pages/SpecificTopicPage";
+import LearningsPage from "./domains/Learnings";
 
 function App() {
   return (
