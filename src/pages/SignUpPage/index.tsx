@@ -4,7 +4,20 @@ import { FcGoogle } from "react-icons/fc";
 import { RAGE_UP_RED } from "../../foundations/colors.ts";
 import { RAGE_UP_RED_LOGO } from "../../foundations/logos.ts";
 import PageLayout from "../../layouts/PageLayout.tsx";
-import { Box, Button, Center, Image, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { LOGIN } from "../../routes/routeNames.ts";
 import RageUpInput from "../../components/RageUpInput/index.tsx";
 import { googleAuth, signup, verifyGoogleToken } from "../../api/auth.ts";
@@ -14,6 +27,7 @@ import { useCookies } from "react-cookie";
 import { useGoogleLogin } from "@react-oauth/google";
 
 const SignUpPage = () => {
+  const [isSigning, setIsSigning] = useState<boolean>(false);
   const toast = useToast();
   const navigate = useNavigate();
   const { setTitle } = useTitle();
@@ -43,7 +57,7 @@ const SignUpPage = () => {
         name: res.data.name,
         email: res.data.email,
       };
-
+      setIsSigning(true);
       const res2 = await googleAuth(body);
       if (res2.status === 200 || res2.status === 201) {
         setCookie("authToken", res2.data.data.token, {
@@ -75,14 +89,17 @@ const SignUpPage = () => {
       }
       console.log(res2);
       // navigate(LOGIN);
+      setIsSigning(false);
     },
     flow: "implicit",
     onError: (err) => {
       console.log(err);
+      setIsSigning(false);
     },
   });
 
   const handleSignup = async () => {
+    setIsSigning(true);
     try {
       // Assuming your signup API returns a success status of 200
       const response = await signup(formData);
@@ -98,102 +115,129 @@ const SignUpPage = () => {
           duration: 5000,
           isClosable: true,
         });
+        setIsSigning(false);
       } else {
         // Handle other response statuses or errors as needed
         console.error("Signup failed:", response);
+        setIsSigning(false);
       }
     } catch (err) {
       console.error("Error during signup:", err);
+      setIsSigning(false);
     }
   };
   return (
     <PageLayout>
-      <div className="flex min-h-[calc(100vh-88px)] bg-white">
-        {/* left */}
-        <div className="hidden w-full lg:flex lg:justify-center lg:items-center">
-          <Image src={RAGE_UP_RED_LOGO} h={64} />
-        </div>
-        {/* right */}
-        <Box
-          backgroundImage={webLayout}
-          backgroundSize={"cover"}
-          backgroundPosition={"center"}
-          className="flex flex-col gap-20 justify-center items-center w-full lg:w-[635px] lg:shrink-0 lg:shadow-lg lg:shadow-black lg:rounded-2xl overflow-hidden"
-        >
-          {/* logo */}
-          {/* <div className="lg:hidden">
+      <>
+        {isSigning && <SigninLoadModal />}
+
+        <div className="flex min-h-[calc(100vh-88px)] bg-white">
+          {/* left */}
+          <div className="hidden w-full lg:flex lg:justify-center lg:items-center">
+            <Image src={RAGE_UP_RED_LOGO} h={64} />
+          </div>
+          {/* right */}
+          <Box
+            backgroundImage={webLayout}
+            backgroundSize={"cover"}
+            backgroundPosition={"center"}
+            className="flex flex-col gap-20 justify-center items-center w-full lg:w-[635px] lg:shrink-0 lg:shadow-lg lg:shadow-black lg:rounded-2xl overflow-hidden"
+          >
+            {/* logo */}
+            {/* <div className="lg:hidden">
             <Image src={RAGE_UP_RED_LOGO} h={36} />
           </div> */}
 
-          {/* signup and login btns */}
-          <div className="flex flex-col items-center w-full gap-10">
-            <div className="flex flex-col gap-4 max-w-64">
-              <RageUpInput
-                placeholder="Name"
-                value={formData.name}
-                // eslint-disable-next-line
-                // @ts-ignore
-                onChange={(e) => handleInputChange("name", e.target.value)}
-              />
-              <RageUpInput
-                placeholder="Email"
-                value={formData.email}
-                // eslint-disable-next-line
-                // @ts-ignore
-                onChange={(e) => handleInputChange("email", e.target.value)}
-              />
-              <RageUpInput
-                placeholder="Password"
-                value={formData.password}
-                // eslint-disable-next-line
-                // @ts-ignore
-                onChange={(e) => handleInputChange("password", e.target.value)}
-              />
-            </div>
-            <Button
-              shadow={"md"}
-              w={40}
-              py={2}
-              px={10}
-              size={"lg"}
-              rounded={"full"}
-              fontSize={"lg"}
-              backgroundColor={"white"}
-              color={RAGE_UP_RED}
-              _hover={{
-                backgroundColor: RAGE_UP_RED,
-                color: "white",
-                border: "solid 2px white",
-              }}
-              onClick={handleSignup}
-            >
-              Proceed
-            </Button>
-
-            <Text fontWeight={"bold"} fontSize={"lg"} color={"white"}>
-              OR
-            </Text>
-
-            <div className="flex flex-col items-center gap-3">
+            {/* signup and login btns */}
+            <div className="flex flex-col items-center w-full gap-10">
+              <div className="flex flex-col gap-4 max-w-64">
+                <RageUpInput
+                  placeholder="Name"
+                  value={formData.name}
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                />
+                <RageUpInput
+                  placeholder="Email"
+                  value={formData.email}
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                />
+                <RageUpInput
+                  placeholder="Password"
+                  value={formData.password}
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  onChange={(e) =>
+                    handleInputChange("password", e.target.value)
+                  }
+                />
+              </div>
               <Button
-                backgroundColor={"white"}
                 shadow={"md"}
-                w={"full"}
-                variant={"outline"}
-                leftIcon={<FcGoogle />}
-                rounded={"xl"}
-                onClick={() => login()}
+                w={40}
+                py={2}
+                px={10}
+                size={"lg"}
+                rounded={"full"}
+                fontSize={"lg"}
+                backgroundColor={"white"}
+                color={RAGE_UP_RED}
+                _hover={{
+                  backgroundColor: RAGE_UP_RED,
+                  color: "white",
+                  border: "solid 2px white",
+                }}
+                onClick={handleSignup}
               >
-                <Center>
-                  <Text>Sign up with Google</Text>
-                </Center>
+                Proceed
               </Button>
+
+              <Text fontWeight={"bold"} fontSize={"lg"} color={"white"}>
+                OR
+              </Text>
+
+              <div className="flex flex-col items-center gap-3">
+                <Button
+                  backgroundColor={"white"}
+                  shadow={"md"}
+                  w={"full"}
+                  variant={"outline"}
+                  leftIcon={<FcGoogle />}
+                  rounded={"xl"}
+                  onClick={() => {
+                    login();
+                  }}
+                >
+                  <Center>
+                    <Text>Sign up with Google</Text>
+                  </Center>
+                </Button>
+              </div>
             </div>
-          </div>
-        </Box>
-      </div>
+          </Box>
+        </div>
+      </>
     </PageLayout>
   );
 };
 
 export default SignUpPage;
+
+const SigninLoadModal = () => {
+  return (
+    <Modal isOpen={true} onClose={() => {}}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalBody>
+          <Flex gap={4} justifyContent={"center"}>
+            Signing Up...
+            <Spinner color="red.500" />
+          </Flex>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};

@@ -3,7 +3,20 @@ import { FcGoogle } from "react-icons/fc";
 
 import { RAGE_UP_RED_LOGO } from "../../foundations/logos.ts";
 import PageLayout from "../../layouts/PageLayout.tsx";
-import { Box, Button, Center, Image, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 // import { LOGIN } from "../../routes/routeNames.ts";
 import RageUpInput from "../../components/RageUpInput/index.tsx";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,6 +28,7 @@ import useTitle from "../../hooks/useTitle.ts";
 import webLayout from "../../assets/images/webLayout.jpg";
 
 const LoginPage = () => {
+  const [isLogging, setIsLogging] = useState<boolean>(false);
   const { setTitle } = useTitle();
   setTitle("RageUp - Login");
   const toast = useToast();
@@ -29,7 +43,7 @@ const LoginPage = () => {
         name: res.data.name,
         email: res.data.email,
       };
-
+      setIsLogging(true);
       const res2 = await googleAuth(body);
       if (res2.status === 200 || res2.status === 201) {
         setCookie("authToken", res2.data.data.token, {
@@ -61,14 +75,17 @@ const LoginPage = () => {
       }
       console.log(res2);
       // navigate(LOGIN);
+      setIsLogging(false);
     },
     flow: "implicit",
     onError: (err) => {
       console.log(err);
+      setIsLogging(false);
     },
   });
   // eslint-disable-next-line
   const handleLogin = async (e: any) => {
+    setIsLogging(true);
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -125,80 +142,100 @@ const LoginPage = () => {
       });
     } finally {
       setLoading(false);
+      setIsLogging(false);
     }
   };
   return (
     <PageLayout>
-      <div className="flex min-h-[calc(100vh-88px)] bg-white">
-        {/* left */}
-        <div className="hidden w-full lg:flex lg:justify-center lg:items-center">
-          <Image src={RAGE_UP_RED_LOGO} h={64} />
-        </div>
-        {/* right */}
-        <Box
-          backgroundImage={webLayout}
-          backgroundSize={"cover"}
-          backgroundPosition={"center"}
-          className="flex flex-col gap-20 justify-center items-center w-full lg:w-[635px] lg:shrink-0 lg:shadow-lg lg:shadow-black lg:rounded-2xl overflow-hidden"
-        >
-          {/* signup and login btns */}
-          <form
-            onSubmit={handleLogin}
-            method="post"
-            className="flex flex-col items-center w-full gap-10"
+      <>
+        {isLogging && <LoginLoadModal />}
+        <div className="flex min-h-[calc(100vh-88px)] bg-white">
+          {/* left */}
+          <div className="hidden w-full lg:flex lg:justify-center lg:items-center">
+            <Image src={RAGE_UP_RED_LOGO} h={64} />
+          </div>
+          {/* right */}
+          <Box
+            backgroundImage={webLayout}
+            backgroundSize={"cover"}
+            backgroundPosition={"center"}
+            className="flex flex-col gap-20 justify-center items-center w-full lg:w-[635px] lg:shrink-0 lg:shadow-lg lg:shadow-black lg:rounded-2xl overflow-hidden"
           >
-            <div className="flex flex-col gap-4 max-w-[650px]">
-              <RageUpInput name="email" type={"email"} placeholder="Email" />
-              <RageUpInput
-                name="password"
-                type={"password"}
-                placeholder="Password"
-              />
-            </div>
-            <Button
-              type="submit"
-              shadow={"md"}
-              w={40}
-              py={2}
-              px={10}
-              size={"lg"}
-              rounded={"full"}
-              fontSize={"lg"}
-              backgroundColor={"white"}
-              color={RAGE_UP_RED}
-              _hover={{
-                backgroundColor: RAGE_UP_RED,
-                color: "white",
-                border: "solid 2px white",
-              }}
+            {/* signup and login btns */}
+            <form
+              onSubmit={handleLogin}
+              method="post"
+              className="flex flex-col items-center w-full gap-10"
             >
-              Login
-            </Button>
-
-            <Text fontWeight={"bold"} fontSize={"lg"} color={"white"}>
-              OR
-            </Text>
-
-            <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col gap-4 max-w-[650px]">
+                <RageUpInput name="email" type={"email"} placeholder="Email" />
+                <RageUpInput
+                  name="password"
+                  type={"password"}
+                  placeholder="Password"
+                />
+              </div>
               <Button
-                backgroundColor={"white"}
+                type="submit"
                 shadow={"md"}
-                w={"full"}
-                variant={"outline"}
-                leftIcon={<FcGoogle />}
-                rounded={"xl"}
-                onClick={() => login()}
+                w={40}
+                py={2}
+                px={10}
+                size={"lg"}
+                rounded={"full"}
+                fontSize={"lg"}
+                backgroundColor={"white"}
+                color={RAGE_UP_RED}
+                _hover={{
+                  backgroundColor: RAGE_UP_RED,
+                  color: "white",
+                  border: "solid 2px white",
+                }}
               >
-                <Center>
-                  <Text> Sign in with google</Text>
-                </Center>
+                Login
               </Button>
-            </div>
-          </form>
-        </Box>
-      </div>
+
+              <Text fontWeight={"bold"} fontSize={"lg"} color={"white"}>
+                OR
+              </Text>
+
+              <div className="flex flex-col items-center gap-3">
+                <Button
+                  backgroundColor={"white"}
+                  shadow={"md"}
+                  w={"full"}
+                  variant={"outline"}
+                  leftIcon={<FcGoogle />}
+                  rounded={"xl"}
+                  onClick={() => login()}
+                >
+                  <Center>
+                    <Text> Sign in with google</Text>
+                  </Center>
+                </Button>
+              </div>
+            </form>
+          </Box>
+        </div>
+      </>
     </PageLayout>
   );
 };
 
 export default LoginPage;
+
+const LoginLoadModal = () => {
+  return (
+    <Modal isOpen={true} onClose={() => {}}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalBody>
+          <Flex gap={4} justifyContent={"center"}>
+            Logging in...
+            <Spinner color="red.500" />
+          </Flex>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
