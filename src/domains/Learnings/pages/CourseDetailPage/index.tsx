@@ -7,7 +7,7 @@ import CoursePurchaseModal from "./modals/CoursePurchase";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
 
 const CourseDetailPage = () => {
-  const [isPurchased, setIsPurchased] = useState<boolean>(false);
+  const [isPurchased, setIsPurchased] = useState<boolean>(true);
   const courseId = "1";
   const subjectId = "2";
   const [isCoursePurchaseModalOpen, setIsCoursePurchaseModalOpen] =
