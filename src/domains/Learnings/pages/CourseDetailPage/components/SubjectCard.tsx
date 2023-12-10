@@ -1,22 +1,19 @@
 import { ChevronRightIcon, LockIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Card,
-  Collapse,
-  Flex,
-  Heading,
-  Text,
-  Tooltip,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { Card, Flex, Heading, Tooltip } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import CollapsableText from "../../../../../components/CollapsableText";
 
-const TopicCard = () => {
-  const [isPurchased, setIsPurchased] = useState<boolean>(false);
+interface SubjectCardProps {
+  isPurchased: boolean;
+  courseId: string;
+  subjectId: string;
+}
+const SubjectCard: React.FC<SubjectCardProps> = ({
+  isPurchased,
+  courseId,
+  subjectId,
+}) => {
   const navigate = useNavigate();
-  const id = 2;
   return (
     <Card
       display={"flex"}
@@ -25,7 +22,7 @@ const TopicCard = () => {
       cursor={"pointer"}
       onClick={() => {
         if (isPurchased) {
-          navigate(`/learnings/${id}`);
+          navigate(`/learnings/${courseId}/${subjectId}`);
         }
       }}
       w={"full"}
@@ -73,4 +70,4 @@ const TopicCard = () => {
   );
 };
 
-export default TopicCard;
+export default SubjectCard;
