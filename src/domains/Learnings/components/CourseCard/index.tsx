@@ -29,17 +29,16 @@ const CourseCard: React.FC<CourseCardProps> = ({ data }) => {
       maxW={"400px"}
       rounded={"xl"}
       overflow={"hidden"}
+      className="course-card"
     >
       {/* Image */}
       <Box
+        className="course-card-img"
         width={"full"}
         aspectRatio={4 / 2}
         backgroundColor={"red.100"}
         roundedBottom={"xl"}
         transitionDuration={"200ms"}
-        _hover={{
-          filter: "brightness(0.95);",
-        }}
       >
         {img && (
           <Image

@@ -21,3 +21,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 100%;
   width: 100%;
 }
+
+.course-card:hover > .course-card-img {
+  filter: brightness(0.95);
+}
