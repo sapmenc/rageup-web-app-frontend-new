@@ -29,7 +29,7 @@ const CourseDetailPage = () => {
               maxW={"2xl"}
             >
               {/* Course Heading */}
-              <Heading>Test Heading</Heading>
+              <Heading>Course Heading</Heading>
               <Flex flexDirection={"column"} gap={3}>
                 {[1, 1, 1, 1, 1, 1].map((_, key) => {
                   return (
