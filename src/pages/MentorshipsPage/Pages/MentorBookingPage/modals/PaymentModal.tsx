@@ -23,27 +23,33 @@ interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   price: number;
+  userNameProps: string;
+  userEmailProps: string;
+  slots: any;
+  mentorID: string;
 }
 const PaymentModal: React.FC<PaymentModalProps> = ({
   isOpen,
   onClose,
   price,
+  userNameProps,
+  userEmailProps,
+  slots,
 }) => {
   const onPay = () => {};
-  const [username, setUsername] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(userNameProps);
+  const [email, setEmail] = useState<string | null>(userEmailProps);
   const [phone, setPhone] = useState<string | null>(null);
   const [query, setQuery] = useState<string | null>(null);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [availableDates, setAvailableDates] = useState<string[]>(
+    slots && Array.isArray(slots) ? slots.map((e) => JSON.stringify(e)) : []
+  );
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
   useEffect(() => {
-    setUsername("Prakhar Kapoor");
-    setEmail("prakharkapoor@gmail.com");
     setAvailableSlots(["9:00 AM", "10:30 PM"]);
-    setAvailableDates(["10 Dec", "12 Dec"]);
   }, []);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -78,9 +84,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             />
             {/* Slots */}
             <Flex flexWrap={"wrap"} gap={3}>
-              {availableSlots.map((slot) => {
+              {availableSlots.map((slot, key) => {
                 return (
                   <Flex
+                    key={key}
                     cursor={"pointer"}
                     boxShadow={"lg"}
                     backgroundColor={"#ffe4e1"}
