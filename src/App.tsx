@@ -4,6 +4,7 @@ import {
   COURSE_DETAIL,
   EXPERIENCE,
   HOME,
+  HOMENEW,
   LEARNINGS,
   LOGIN,
   MAIN,
@@ -20,6 +21,7 @@ import {
   VACANCIES,
 } from "./routes/routeNames";
 import HomePage from "./pages/HomePage";
+import HomePageNew from "./pages/HomePageNew";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import UserProfilePage from "./pages/UserProfilePage";
@@ -43,6 +45,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={HOME} element={<HomePage />} />
+        <Route path={HOMENEW} element={<HomePageNew />} />
         <Route path={MAIN} element={<MainPage />} />
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={"/logout"} element={<Logout />} />
