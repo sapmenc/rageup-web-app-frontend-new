@@ -13,6 +13,7 @@ import HomeMainFeature from '../../components/HomePageNewComponents/HomeMainFeat
 import IdealArticleshipMatch from '../../components/HomePageNewComponents/IdealArticleshipMatch';
 import HeroLastSection from '../../components/HomePageNewComponents/HeroLastSection';
 import LandingFooterNew from '../../components/LandingPageComponent/LandingFooterNew';
+import HeroVideoSection from '../../components/HomePageNewComponents/HeroVideoSection';
 
 const HomePageNew = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const HomePageNew = () => {
       <HomeFeatures/>
       <HomeMainFeature/>
       <IdealArticleshipMatch/>
+      <HeroVideoSection/>
       <HeroLastSection/>
       <LandingFooterNew/>
     </Stack>

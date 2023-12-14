@@ -44,8 +44,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={HOME} element={<HomePage />} />
-        <Route path={HOMENEW} element={<HomePageNew />} />
+        <Route path={HOMENEW} element={<HomePage />} />
+        <Route path={HOME} element={<HomePageNew />} />
         <Route path={MAIN} element={<MainPage />} />
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={"/logout"} element={<Logout />} />

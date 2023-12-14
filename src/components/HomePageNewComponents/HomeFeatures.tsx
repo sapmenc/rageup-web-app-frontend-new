@@ -29,15 +29,15 @@ const HomeFeatures = () => {
           </Stack>
           <Flex px='100px' w='100%' justify={'space-evenly'} flexWrap={'wrap'} zIndex={10}>
             <Stack w='30%' minW={'220px'} align={'center'} m='10px'>
-              <Image src={img1} alt="img-1"/>
+              <Image src={img1} w='70%' alt="img-1"/>
               <Text fontSize={'24px'} fontWeight={'bold'} w='80%' textAlign={'center'}>Discover Articleships</Text>
             </Stack>
             <Stack w='30%' minW={'220px'} align={'center'} m='10px'>
-              <Image src={img3} alt="img-3"/>
+              <Image src={img3} w='70%' alt="img-3"/>
               <Text fontSize={'24px'} fontWeight={'bold'} w='80%' textAlign={'center'}>Learn from the best courses</Text>
             </Stack>
             <Stack w='30%' minW={'220px'} align={'center'} m='10px'>
-              <Image src={img2} alt="img-2"/>
+              <Image src={img2} w='70%' alt="img-2"/>
               <Text fontSize={'24px'} fontWeight={'bold'} w='80%' textAlign={'center'}>Seek guidance from mentors</Text>
             </Stack>
           </Flex>
