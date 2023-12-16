@@ -1,18 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageLayout from "../../../../layouts/PageLayout";
 import FieldCheckLayout from "../../../../layouts/FieldCheckLayout";
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, useToast } from "@chakra-ui/react";
 import SubjectCard from "./components/SubjectCard";
 import CoursePurchaseModal from "./modals/CoursePurchase";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
+import { useParams } from "react-router-dom";
+import { getCourseById } from "../../../../api/course";
+import { CourseType } from "../../types";
+
+export const EMPTY_COURSE: CourseType = {
+  _id: "null",
+  name: null,
+  subjects: [],
+};
 
 const CourseDetailPage = () => {
-  const [isPurchased, setIsPurchased] = useState<boolean>(false);
-  const courseId = "1";
-  const subjectId = "2";
+  const [isPurchased, setIsPurchased] = useState<boolean>(true);
+  const [course, setCourse] = useState<CourseType | null>(null);
   const [isCoursePurchaseModalOpen, setIsCoursePurchaseModalOpen] =
     useState<boolean>(false);
+  const toast = useToast();
+  const { id } = useParams();
+  const fetchCourseData = async () => {
+    try {
+      const res = await getCourseById(id);
+      if (res.status === 200) {
+        toast({
+          title: "Course details fetched.",
+          description: "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setCourse(res?.data?.data || EMPTY_COURSE);
+      } else {
+        // error
+        toast({
+          title: "Error",
+          description: "Unexpected status occurred, course detail not fetched.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+    } catch {
+      toast({
+        title: "Error",
+        description: "Error in fetching course.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+  };
+  useEffect(() => {
+    fetchCourseData();
+  }, []);
 
+  if (!course) {
+    return null;
+  }
   return (
     <>
       {isCoursePurchaseModalOpen && (
@@ -59,10 +109,10 @@ const CourseDetailPage = () => {
                 Course Heading
               </Heading>
               <Flex flexDirection={"column"} gap={3}>
-                {[1, 1, 1, 1, 1, 1].map((_, key) => {
+                {course?.subjects.map((subject, key) => {
                   return (
                     <Box
-                      key={key}
+                      key={subject._id}
                       onClick={() => {
                         if (!isPurchased) {
                           setIsCoursePurchaseModalOpen(true);
@@ -71,8 +121,8 @@ const CourseDetailPage = () => {
                     >
                       <SubjectCard
                         isPurchased={isPurchased}
-                        courseId={courseId}
-                        subjectId={subjectId}
+                        courseId={course?._id || ""}
+                        subjectId={subject._id}
                       />
                     </Box>
                   );

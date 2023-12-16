@@ -17,19 +17,34 @@ import { withCookies } from "react-cookie";
 import { startRageUpTest } from "../../../../api/rageUpTest";
 import { useState } from "react";
 import Loader from "../../../../components/Loader";
+import { updateUserProfile } from "../../../../api/user";
 
 const RageupTest = (props: any) => {
+  const userId = props.cookies.get("user")?._id;
   const token = props.cookies.get("authToken");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const toast = useToast();
 
+  const setRageUpTestPaid = async (isPaid: boolean): Promise<boolean> => {
+    try {
+      const res = await updateUserProfile(
+        userId,
+        { isRageUpTestPaid: isPaid },
+        token
+      );
+      if (res.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch {
+      return false;
+    }
+  };
   const handlePayment = async () => {
     setIsPaymentModalOpen(false);
-    const onSuccess = () => {
-      // set isRageupTestPaid = true
-      // then
-
+    const onSuccess = async () => {
       toast({
         title: "Payment successful",
         description: "",
@@ -37,8 +52,26 @@ const RageupTest = (props: any) => {
         duration: 5000,
         isClosable: true,
       });
+      // set isRageupTestPaid = true
+      let count = 0;
+      let isUpdateSuccessful = false;
 
-      testInvokation();
+      while (!isUpdateSuccessful && count < 3) {
+        isUpdateSuccessful = await setRageUpTestPaid(true);
+        count++;
+      }
+      if (!isUpdateSuccessful) {
+        toast({
+          title: "Aborting Purchase",
+          description: "User Rage up paid status not changing.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      } else {
+        testInvokation();
+      }
     };
     const onFail = () => {
       toast({

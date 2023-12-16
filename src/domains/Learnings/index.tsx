@@ -14,7 +14,7 @@ import FieldCheckLayout from "../../layouts/FieldCheckLayout";
 import useAuth from "../../hooks/useAuth";
 import { RAGE_UP_RED } from "../../foundations/colors";
 import CourseCard from "./components/CourseCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllCourses } from "../../api/course";
 
 const LearningsPage = () => {
@@ -22,11 +22,13 @@ const LearningsPage = () => {
   const toast = useToast();
   const { setTitle } = useTitle();
   setTitle("RageUp - Learning");
+  const [coursesData, setCoursesData] = useState<any[] | null>(null);
   const fetchAllCourses = async () => {
     try {
       const res = await getAllCourses();
       if (res.status === 200) {
-        console.log(res?.data?.data || []);
+        const data = res?.data?.data || [];
+        setCoursesData(data);
         toast({
           title: "Fetch all courses",
           description: "",
@@ -56,6 +58,10 @@ const LearningsPage = () => {
   useEffect(() => {
     fetchAllCourses();
   }, []);
+
+  if (!coursesData) {
+    return null;
+  }
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -99,14 +105,14 @@ const LearningsPage = () => {
                   lg: "repeat(2, 1fr)",
                 }}
               >
-                {[1, 1, 1, 1, 1]?.map((v, idx) => {
+                {coursesData?.map((course, idx) => {
                   return (
                     <GridItem
                       key={idx}
                       display={"flex"}
                       justifyContent={"center"}
                     >
-                      <CourseCard data={v} />
+                      <CourseCard data={course} />
                     </GridItem>
                   );
                 })}
