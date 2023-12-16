@@ -6,6 +6,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  useToast,
 } from "@chakra-ui/react";
 import useTitle from "../../hooks/useTitle";
 import PageLayout from "../../layouts/PageLayout";
@@ -13,11 +14,48 @@ import FieldCheckLayout from "../../layouts/FieldCheckLayout";
 import useAuth from "../../hooks/useAuth";
 import { RAGE_UP_RED } from "../../foundations/colors";
 import CourseCard from "./components/CourseCard";
+import { useEffect } from "react";
+import { getAllCourses } from "../../api/course";
 
 const LearningsPage = () => {
   useAuth();
+  const toast = useToast();
   const { setTitle } = useTitle();
   setTitle("RageUp - Learning");
+  const fetchAllCourses = async () => {
+    try {
+      const res = await getAllCourses();
+      if (res.status === 200) {
+        console.log(res?.data?.data || []);
+        toast({
+          title: "Fetch all courses",
+          description: "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Unexpected status.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description: err?.message || "",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+  useEffect(() => {
+    fetchAllCourses();
+  }, []);
   return (
     <PageLayout>
       <FieldCheckLayout>
