@@ -43,14 +43,14 @@ const LandingFooterNew = () => {
                 >
                   Explore
                 </Text>
-                {/* <Link href="/"> */}
+                <Link href="#solutions">
                   <Text align={["center", "center", "center"]} mb={"5px"}>
                     Solution
                   </Text>
-                {/* </Link> */}
-                {/* <Link href="/allProducts"> */}
+                </Link>
+                <Link href="#features">
                   <Text align={["center", "center", "center"]}>Features</Text>
-                {/* </Link> */}
+                </Link>
               </Flex>
               <Flex direction={"column"} mb={["2rem", "2rem", "1rem"]} gap={5}>
                 <Text
@@ -60,9 +60,11 @@ const LandingFooterNew = () => {
                 >
                   About
                 </Text>
+                <Link href="#about">
                 <Text align={["center", "center", "center"]} mb={"5px"}>
                   About Us
                 </Text>
+                </Link>
                 <Link href="/contact">
                   <Text align={["center", "center", "center"]} mb={"5px"}>
                     Contact Us

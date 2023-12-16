@@ -25,3 +25,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .course-card:hover > .course-card-img {
   filter: brightness(0.95);
 }
+
+*{
+  scroll-behavior: smooth;
+}

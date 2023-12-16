@@ -28,3 +28,5 @@ export const TERMS_AND_CONDITIONS = "/terms-and-conditions";
 export const REFUND_POLICY = "/refund-policy";
 
 export const RAGEUP_TEST = "/rageupTest/:id";
+
+export const CONTACT = "/contact"

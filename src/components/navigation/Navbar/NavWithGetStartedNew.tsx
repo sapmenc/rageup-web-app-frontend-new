@@ -25,10 +25,10 @@ import {
   const NavWithGetStartedNew = () => {
     const navigate = useNavigate();
     const LANDING_LINKS = [
-      { name: "About", link: MAIN },
-      { name: "Solutions", link: MAIN },
-      { name: "Features", link: MAIN },
-      { name: "Contact Us", link: MAIN },
+      { name: "About", link:'/#about' },
+      { name: "Solutions", link: '/#solutions' },
+      { name: "Features", link: '/#features' },
+      { name: "Contact Us", link: '/contact' },
     ];
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (

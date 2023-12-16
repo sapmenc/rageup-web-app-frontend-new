@@ -20,6 +20,7 @@ import {
   SPECIFIC_VACANCY,
   TERMS_AND_CONDITIONS,
   VACANCIES,
+  CONTACT
 } from "./routes/routeNames";
 import HomePage from "./pages/HomePage";
 import HomePageNew from "./pages/HomePageNew";
@@ -41,6 +42,7 @@ import CourseDetailPage from "./domains/Learnings/pages/CourseDetailPage";
 import LearningsPage from "./domains/Learnings";
 import SpecificSubjectPage from "./domains/Learnings/pages/SpecificSubjectPage";
 import RageupTestPage from "./pages/RageupPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 function App() {
   return (
@@ -82,6 +84,7 @@ function App() {
         />
         <Route path={REFUND_POLICY} element={<ReturnPolicyPage />} />
         <Route path={"*"} element={<div>Page not found - custom page</div>} />
+        <Route path={CONTACT} element={<ContactUsPage/>} />
       </Routes>
     </BrowserRouter>
   );

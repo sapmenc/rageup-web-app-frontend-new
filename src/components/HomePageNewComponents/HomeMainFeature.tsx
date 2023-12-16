@@ -10,7 +10,7 @@ import {
 const HomeMainFeature = () => {
     const navigate = useNavigate();
   return (
-    <Flex w='100%' px={['10px','10px','10px','100px']} pt='150px' pb='50px' flexDir={['column-reverse','column-reverse','column-reverse','row']}>
+    <Flex w='100%' px={['10px','10px','10px','100px']} pt='150px' pb='50px' flexDir={['column-reverse','column-reverse','column-reverse','row']} id='features'>
         <Stack w={['100%','100%','100%','50%']} justify={'center'} align={'center'}>
             <Text fontWeight={'bold'} fontSize={'24px'} w='90%'>Time to get to the heart of it!</Text>
             <Text fontSize={'20px'} w='90%'>Exploring articleship is like fitting puzzle pieces in a vast landscape. CA students often face several challenges during their practical training with no one there to lend a hand!</Text>

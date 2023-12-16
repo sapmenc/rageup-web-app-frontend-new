@@ -15,7 +15,7 @@ import { MAIN } from "../../routes/routeNames";
 const HomeFeatures = () => {
   const navigate = useNavigate();
   return (
-    <Stack w='100%'>
+    <Stack w='100%' id='about'>
         <Stack w='100%' align={'center'} gap={8} pb='50px'>
           <Text fontWeight={'bold'} textAlign={'center'} fontSize={'25px'}>What's RageUp ?</Text>
           <Text textAlign={'center'} fontSize={'20px'} w={['90%','65%','50%','47%']}>We are a niche platform developed with the assistance of CA firms that allows aspirants to discover perfect Articleship Experience.</Text>
