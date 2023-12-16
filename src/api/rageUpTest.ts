@@ -1,6 +1,10 @@
-import API_INSTANCE from "."
+import API_INSTANCE from ".";
 
-export const startRageUpTest = async (body:any) => {
-    const res = await API_INSTANCE.get('/rageUpTest/startRageUpTest', body);
-    return res;
+export const startRageUpTest = async (body: any, token: string) => {
+  const res = await API_INSTANCE.post("/rageUpTest/startRageUpTest", body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
 };
