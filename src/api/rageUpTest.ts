@@ -8,3 +8,11 @@ export const startRageUpTest = async (body: any, token: string) => {
   });
   return res;
 };
+
+export const getTestById = async (id: any, token: string) => {
+  const res = await API_INSTANCE.get(`/rageUpTest/get/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
