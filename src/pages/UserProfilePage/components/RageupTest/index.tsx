@@ -1,17 +1,62 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import CardLayout from "../../../../layouts/CardLayout";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
 import { withCookies } from "react-cookie";
 import { startRageUpTest } from "../../../../api/rageUpTest";
-import { toast } from "react-toastify";
 import { useState } from "react";
-import PaymentModal from "./PaymentModal";
 import Loader from "../../../../components/Loader";
 
 const RageupTest = (props: any) => {
   const token = props.cookies.get("authToken");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
+  const toast = useToast();
+
+  const handlePayment = async () => {
+    setIsPaymentModalOpen(false);
+    const onSuccess = () => {
+      // set isRageupTestPaid = true
+      // then
+
+      toast({
+        title: "Payment successful",
+        description: "",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      testInvokation();
+    };
+    const onFail = () => {
+      toast({
+        title: "Payment failed",
+        description: "",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    };
+
+    const paymentStatus: boolean = true;
+    if (paymentStatus) {
+      onSuccess();
+    } else {
+      onFail();
+    }
+  };
 
   const testInvokation = async () => {
     setIsLoading(true);
@@ -21,18 +66,51 @@ const RageupTest = (props: any) => {
       if (res.status === 200) {
         // redirect to test page based on test id in the response
       } else {
-        toast.error("Some expected error");
+        toast({
+          title: "Some expected error",
+          description: "",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     } catch (err: any) {
       if (err.response.status === 402) {
         // open payment modal
-        console.log("entering");
         setIsLoading(false);
         setIsPaymentModalOpen(true);
+      } else {
+        toast({
+          title: "Error occurred! Try again.",
+          description: "",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
-      console.log(toast.error("Error occurred! Try again."));
     }
     setIsLoading(false);
+  };
+  interface PaymentModalProps {
+    onClose: () => void;
+  }
+  const PaymentModal: React.FC<PaymentModalProps> = ({ onClose }) => {
+    return (
+      <Modal isOpen={true} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Payment Modal</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Payment required to give test.</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handlePayment}>
+              Pay Rs 500
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
   };
 
   return (
