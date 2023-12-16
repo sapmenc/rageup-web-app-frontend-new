@@ -1,5 +1,5 @@
 export const HOME = "/";
-export const HOMENEW="/new"
+export const HOMENEW = "/new";
 export const MAIN = "/main";
 export const LOGIN = "/login";
 export const SIGNUP = "/signup";
@@ -26,3 +26,5 @@ export const MENTOR_BOOKING = "/mentorships/mentor/:id/booking";
 export const PRIVACY_POLICY = "/privacy-policy";
 export const TERMS_AND_CONDITIONS = "/terms-and-conditions";
 export const REFUND_POLICY = "/refund-policy";
+
+export const RAGEUP_TEST = "/rageupTest/:id";

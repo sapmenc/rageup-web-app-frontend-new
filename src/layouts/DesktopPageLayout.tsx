@@ -8,6 +8,7 @@ import {
   MAIN,
   MENTORSHIPS,
   PRIVACY_POLICY,
+  RAGEUP_TEST,
   REFUND_POLICY,
   SIGNUP,
   TERMS_AND_CONDITIONS,
@@ -19,6 +20,7 @@ import { NAVBAR_HEIGHT } from "../utils/measurement";
 import {
   specificLearningPageCheck,
   specificMentorPageCheck,
+  specificRageupTestPageCheck,
   specificVacancyPageCheck,
   usersProfilePageCheck,
 } from "../utils/regex/functions/specificPageCheckers";
@@ -41,6 +43,7 @@ const GetNavbar = () => {
     routeName === MAIN ||
     routeName === LOGIN ||
     routeName === SIGNUP ||
+    specificRageupTestPageCheck(routeName) ||
     routeName === PRIVACY_POLICY ||
     routeName === TERMS_AND_CONDITIONS ||
     routeName === REFUND_POLICY

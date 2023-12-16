@@ -11,6 +11,7 @@ import {
   MENTORSHIPS,
   MENTOR_BOOKING,
   PRIVACY_POLICY,
+  RAGEUP_TEST,
   REFUND_POLICY,
   SIGNUP,
   SPECIFIC_MENTOR,
@@ -39,6 +40,7 @@ import Logout from "./pages/logout";
 import CourseDetailPage from "./domains/Learnings/pages/CourseDetailPage";
 import LearningsPage from "./domains/Learnings";
 import SpecificSubjectPage from "./domains/Learnings/pages/SpecificSubjectPage";
+import RageupTestPage from "./pages/RageupPage";
 
 function App() {
   return (
@@ -50,6 +52,9 @@ function App() {
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={"/logout"} element={<Logout />} />
         <Route path={SIGNUP} element={<SignUpPage />} />
+
+        {/* Rage up test */}
+        <Route path={RAGEUP_TEST} element={<RageupTestPage />} />
 
         {/* profile */}
         <Route path={SPECIFIC_USER} element={<UserProfilePage />} />

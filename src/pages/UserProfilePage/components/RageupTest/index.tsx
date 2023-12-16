@@ -18,8 +18,10 @@ import { startRageUpTest } from "../../../../api/rageUpTest";
 import { useState } from "react";
 import Loader from "../../../../components/Loader";
 import { updateUserProfile } from "../../../../api/user";
+import { useNavigate } from "react-router-dom";
 
 const RageupTest = (props: any) => {
+  const navigate = useNavigate();
   const userId = props.cookies.get("user")?._id;
   const token = props.cookies.get("authToken");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -70,6 +72,7 @@ const RageupTest = (props: any) => {
         });
         return;
       } else {
+        console.log("successful updation");
         testInvokation();
       }
     };
@@ -98,6 +101,8 @@ const RageupTest = (props: any) => {
       const res = await startRageUpTest({}, token);
       if (res.status === 200) {
         // redirect to test page based on test id in the response
+        const testId = res?.data?.test?._id || "noID";
+        navigate(`/rageupTest/${testId}`);
       } else {
         toast({
           title: "Some expected error",

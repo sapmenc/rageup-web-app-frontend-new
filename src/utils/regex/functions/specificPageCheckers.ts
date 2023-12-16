@@ -1,4 +1,5 @@
 import {
+  RAGE_UP_TEST_PAGE_REGEX,
   SPECIFIC_LEARNING_PAGE_REGEX,
   SPECIFIC_MENTOR_PAGE_REGEX,
   SPECIFIC_VACANCY_PAGE_REGEX,
@@ -22,5 +23,10 @@ export const specificLearningPageCheck = (url: string): boolean => {
 
 export const specificMentorPageCheck = (url: string): boolean => {
   const regex = SPECIFIC_MENTOR_PAGE_REGEX;
+  return regex.test(url);
+};
+
+export const specificRageupTestPageCheck = (url: string): boolean => {
+  const regex = RAGE_UP_TEST_PAGE_REGEX;
   return regex.test(url);
 };
