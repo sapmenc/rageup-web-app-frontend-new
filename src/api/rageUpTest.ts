@@ -17,3 +17,12 @@ export const getTestById = async (id: any, token: string) => {
   });
   return res;
 };
+
+export const evaluateRageupTest = async (id: any, token: string, body: any) => {
+  const res = await API_INSTANCE.post(`/rageUpTest/evaluate/${id}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};
