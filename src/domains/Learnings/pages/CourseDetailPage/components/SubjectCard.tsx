@@ -7,11 +7,15 @@ interface SubjectCardProps {
   isPurchased: boolean;
   courseId: string;
   subjectId: string;
+  name: string;
+  description: string;
 }
 const SubjectCard: React.FC<SubjectCardProps> = ({
   isPurchased,
   courseId,
   subjectId,
+  name,
+  description,
 }) => {
   const navigate = useNavigate();
   return (
@@ -35,7 +39,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
         {/* Title + icon*/}
         <Flex justifyContent={"space-between"} gap={5}>
           <Heading fontSize={"lg"} noOfLines={2}>
-            Introduction
+            {name}
           </Heading>
           <Flex gap={1} alignItems={"center"}>
             {/* lock button */}
@@ -57,14 +61,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
           </Flex>
         </Flex>
         {/* description */}
-        <CollapsableText>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae commodi
-          molestiae animi fuga odit quisquam repudiandae deleniti id, dicta
-          voluptas, beatae, earum impedit tenetur quaerat aliquid ipsa.
-          Inventore, consectetur recusandae. Lorem ipsum, dolor sit amet
-          consectetur adipisicing elit. Itaque fugiat suscipit praesentium
-          reiciendis ipsum, tempora dolore alias cum dolorum laudantium.
-        </CollapsableText>
+        <CollapsableText>{description}</CollapsableText>
       </Flex>
     </Card>
   );

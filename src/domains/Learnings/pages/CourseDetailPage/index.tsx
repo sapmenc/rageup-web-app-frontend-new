@@ -106,10 +106,10 @@ const CourseDetailPage = () => {
             >
               {/* Course Heading */}
               <Heading fontSize={"2xl"} mb={2}>
-                Course Heading
+                {course.name}
               </Heading>
               <Flex flexDirection={"column"} gap={3}>
-                {course?.subjects.map((subject, key) => {
+                {course?.subjects.map((subject, _) => {
                   return (
                     <Box
                       key={subject._id}
@@ -122,7 +122,9 @@ const CourseDetailPage = () => {
                       <SubjectCard
                         isPurchased={isPurchased}
                         courseId={course?._id || ""}
-                        subjectId={subject._id}
+                        subjectId={subject._id || ""}
+                        name={subject.name || ""}
+                        description={subject.description || ""}
                       />
                     </Box>
                   );

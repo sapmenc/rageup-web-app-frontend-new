@@ -11,7 +11,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoLink }) => {
     <>
       <Flex justify={"center"}>
         {videoLink ? (
-          <Player fluid={false} height={400} width={711}>
+          <Player fluid={false} height={300} width={534}>
             <source src={videoLink} />
           </Player>
         ) : (

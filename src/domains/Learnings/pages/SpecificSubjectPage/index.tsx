@@ -87,14 +87,14 @@ const SpecificSubjectPage = () => {
             pt={10}
             pb={{ base: 16, lg: 2 }}
             px={4}
-            gap={4}
+            gap={6}
             w={"full"}
             maxW={"2xl"}
           >
             {/* Course Heading */}
             <Heading fontSize={"2xl"}>{course.name}</Heading>
             <Heading fontSize={"lg"}>{subject.name}</Heading>
-            <Flex flexDirection={"column"} gap={8}>
+            <Flex flexDirection={"column"} gap={20}>
               {subject.topics.map((topic, key) => {
                 return (
                   <Box key={key}>
