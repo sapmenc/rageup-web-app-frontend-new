@@ -15,4 +15,5 @@ export const getTestById = async (id: any, token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+  return res;
+};
