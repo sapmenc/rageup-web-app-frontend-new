@@ -35,6 +35,8 @@ const RageupTestPage = (props: any) => {
   const [questions, setQuestions] = useState<QuestionType[] | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const [isInvoked, setIsInvoked] = useState<boolean>(false);
+
   const handleSubmit = async () => {
     if (!test) {
       return;
@@ -179,7 +181,6 @@ const RageupTestPage = (props: any) => {
     onEndTimeReached,
   }) => {
     const [currentTime, setCurrentTime] = useState(new Date());
-    const [isInvoked, setIsInvoked] = useState<boolean>(false);
     const endTime = new Date(new Date(startTime).getTime() + duration * 60000);
     let interval: NodeJS.Timer | null = null;
     useEffect(() => {
@@ -188,10 +189,8 @@ const RageupTestPage = (props: any) => {
       }, 1000);
 
       if (currentTime >= endTime && interval) {
-        if (!isInvoked) {
-          onEndTimeReached();
-          setIsInvoked(true);
-        }
+        onEndTimeReached();
+
         clearInterval(interval);
       }
 
@@ -249,7 +248,10 @@ const RageupTestPage = (props: any) => {
                     startTime={test.createdAt}
                     duration={1}
                     onEndTimeReached={() => {
-                      console.log("test submitted");
+                      if (!isInvoked) {
+                        setIsInvoked(true);
+                        console.log("test submitted");
+                      }
                     }}
                   />
                 )}
