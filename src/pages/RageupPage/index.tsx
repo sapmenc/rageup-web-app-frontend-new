@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { evaluateRageupTest, getTestById } from "../../api/rageUpTest";
 import { withCookies } from "react-cookie";
 import Timer from "../../components/Timer";
+import Loader from "../../components/Loader";
 
 type QuestionType = {
   _id: string;
@@ -37,9 +38,12 @@ const RageupTestPage = (props: any) => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [isInvoked, setIsInvoked] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     if (!test) {
+      setIsSubmitting(false);
       return;
     }
     const body = {
@@ -76,7 +80,9 @@ const RageupTestPage = (props: any) => {
         duration: 5000,
         isClosable: true,
       });
+      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
   const getTest = async () => {
     try {
@@ -205,6 +211,7 @@ const RageupTestPage = (props: any) => {
             >
               {/* clock */}
               <Flex>
+                {isSubmitting && <Loader message="Submitting..." />}
                 {test && (
                   <Timer
                     startTime={test.createdAt}
