@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { evaluateRageupTest, getTestById } from "../../api/rageUpTest";
 import { withCookies } from "react-cookie";
 
@@ -26,6 +26,7 @@ type Test = {
   userId: string;
   _id: string;
 };
+
 const RageupTestPage = (props: any) => {
   const { id } = useParams();
   const toast = useToast();
@@ -166,6 +167,66 @@ const RageupTestPage = (props: any) => {
   }
   console.log("test", test);
 
+  interface TimerProps {
+    startTime: string; // ISO format
+    duration: number; // duration in minutes
+    onEndTimeReached: () => void; // function to invoke when end time is reached
+  }
+
+  const Timer: React.FC<TimerProps> = ({
+    startTime,
+    duration,
+    onEndTimeReached,
+  }) => {
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [isInvoked, setIsInvoked] = useState<boolean>(false);
+    const endTime = new Date(new Date(startTime).getTime() + duration * 60000);
+    let interval: NodeJS.Timer | null = null;
+    useEffect(() => {
+      interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+
+      if (currentTime >= endTime && interval) {
+        if (!isInvoked) {
+          onEndTimeReached();
+          setIsInvoked(true);
+        }
+        clearInterval(interval);
+      }
+
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
+    }, [currentTime]);
+
+    const getRemainingTime = () => {
+      const difference = endTime.getTime() - currentTime.getTime();
+      if (difference <= 0) {
+        return "00:00:00";
+      }
+      let hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      let minutes = Math.floor((difference / 1000 / 60) % 60);
+      let seconds = Math.floor((difference / 1000) % 60);
+
+      return `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
+
+    return (
+      <div>
+        {currentTime < endTime ? (
+          <p>Time remaining: {getRemainingTime()}</p>
+        ) : (
+          <p>Time's up!</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -181,6 +242,18 @@ const RageupTestPage = (props: any) => {
               w={"full"}
               maxW={"2xl"}
             >
+              {/* clock */}
+              <Flex>
+                {test && (
+                  <Timer
+                    startTime={test.createdAt}
+                    duration={1}
+                    onEndTimeReached={() => {
+                      console.log("test submitted");
+                    }}
+                  />
+                )}
+              </Flex>
               {/* questions */}
               {questions.map((question, key) => {
                 return (
