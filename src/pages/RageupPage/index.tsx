@@ -8,7 +8,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { evaluateRageupTest, getTestById } from "../../api/rageUpTest";
 import { withCookies } from "react-cookie";
@@ -36,7 +36,7 @@ const RageupTestPage = (props: any) => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [isInvoked, setIsInvoked] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const handleSubmit = async () => {
     if (!test) {
       return;
@@ -60,7 +60,7 @@ const RageupTestPage = (props: any) => {
         console.log(res);
       } else {
         toast({
-          title: "Error Occured in submission.",
+          title: "Error Occurred in submission.",
           description: "",
           status: "error",
           duration: 5000,
@@ -69,7 +69,7 @@ const RageupTestPage = (props: any) => {
       }
     } catch {
       toast({
-        title: "Error Occured in submission.",
+        title: "Error Occurred in submission.",
         description: "",
         status: "error",
         duration: 5000,
@@ -118,6 +118,7 @@ const RageupTestPage = (props: any) => {
       }
     } catch (err: any) {
       console.log(err);
+      const uId = err?.response?.data?.test?.userId;
       if (err?.response?.status === 401) {
         // invalid user
         toast({
@@ -127,6 +128,10 @@ const RageupTestPage = (props: any) => {
           duration: 5000,
           isClosable: true,
         });
+        setTimeout(() => {
+          navigate(`/users/${uId}`);
+        }, 2000);
+
         return;
       } else if (err?.response?.status === 404) {
         // test no found
@@ -137,6 +142,10 @@ const RageupTestPage = (props: any) => {
           duration: 5000,
           isClosable: true,
         });
+        setTimeout(() => {
+          navigate(`/users/${uId}`);
+        }, 2000);
+
         return;
       } else if (err?.response?.status === 410) {
         // test already completed
@@ -147,16 +156,25 @@ const RageupTestPage = (props: any) => {
           duration: 5000,
           isClosable: true,
         });
+
+        setTimeout(() => {
+          navigate(`/users/${uId}`);
+        }, 2000);
+
         return;
       } else {
         // internal server error, please reload again
         toast({
           title: "Error",
-          description: "Internal server error, please reload again.",
+          description: "Internal server error",
           status: "error",
           duration: 5000,
           isClosable: true,
         });
+        setTimeout(() => {
+          navigate(`/users/${uId}`);
+        }, 2000);
+
         return;
       }
     }
@@ -246,11 +264,11 @@ const RageupTestPage = (props: any) => {
                 {test && (
                   <Timer
                     startTime={test.createdAt}
-                    duration={1}
+                    duration={30}
                     onEndTimeReached={() => {
                       if (!isInvoked) {
                         setIsInvoked(true);
-                        console.log("test submitted");
+                        handleSubmit();
                       }
                     }}
                   />
