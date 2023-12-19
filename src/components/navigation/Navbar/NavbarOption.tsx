@@ -23,8 +23,11 @@ const NavbarOption: React.FC<OptionProps> = ({
       onClick={() => {
         if (label === "Logout") {
           console.log("logout here");
-        } else {
+
+          // navigate to  /logout
           navigateMe(label, link);
+        } else {
+          // navigateMe(label, link);
         }
       }}
     >
