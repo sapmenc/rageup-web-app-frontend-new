@@ -203,11 +203,11 @@ const VacanciesPage = () => {
                 }}
               >
                 {data?.map((v, idx) => {
-                  return (
+                  return v.isVacancyActive?(
                     <GridItem key={idx}>
                       <VacancyCard data={v} />
                     </GridItem>
-                  );
+                  ):<></>;
                 })}
               </Grid>
             </TabPanel>
