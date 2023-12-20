@@ -43,18 +43,20 @@ const HomeFeatures = () => {
           </Flex>
           <Flex w='100%' justify={'center'} >
           <Button
-              mt='60px'
-              w='160px'
-              py='10px'
-              borderRadius={'15px'}
-              backgroundColor={RAGE_UP_RED}
-              color={"white"}
-              fontWeight={700}
-              transitionDuration={"100"}
-              _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
-              onClick={() => {
-              navigate(MAIN);
-              }}
+            mt='35px'
+            w='160px'
+            py='10px'
+            borderRadius={'15px'}
+            // display={["none", "none", "none", "block"]}
+            backgroundColor={RAGE_UP_RED}
+            color={"white"}
+            fontWeight={700}
+            transitionDuration={"100"}
+            _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
+            onClick={() => {
+            navigate(MAIN);
+            }}
+            zIndex={10}
           >
               Explore RageUp
           </Button>
