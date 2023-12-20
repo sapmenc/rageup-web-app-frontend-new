@@ -137,14 +137,14 @@ const RageupTest = (props: any) => {
       <Modal isOpen={true} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Payment Modal</ModalHeader>
+          <ModalHeader>Test Restricted</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Payment required to give test.</ModalBody>
+          <ModalBody>You can give the test once in a month.</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handlePayment}>
+            {/* <Button colorScheme="blue" mr={3} onClick={handlePayment}>
               Pay Rs 500
-            </Button>
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

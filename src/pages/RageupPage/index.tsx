@@ -72,14 +72,29 @@ const RageupTestPage = (props: any) => {
           isClosable: true,
         });
       }
-    } catch {
-      toast({
-        title: "Error Occurred in submission.",
-        description: "",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+    } catch (err: any) {
+      const uId = err?.response?.data?.test?.userId;
+
+      if (err.response.status === 410) {
+        toast({
+          title: "Test is already submitted.",
+          description: "",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate(`/users/${uId}`);
+        }, 500);
+      } else {
+        toast({
+          title: "Error Occurred in submission.",
+          description: "",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
       setIsSubmitting(false);
     }
     setIsSubmitting(false);
@@ -215,7 +230,7 @@ const RageupTestPage = (props: any) => {
                 {test && (
                   <Timer
                     startTime={test.createdAt}
-                    duration={30}
+                    duration={10}
                     onEndTimeReached={() => {
                       if (!isInvoked) {
                         setIsInvoked(true);
