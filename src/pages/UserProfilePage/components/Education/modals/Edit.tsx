@@ -17,7 +17,7 @@ import SelectCustom from "../../../../../components/inputs/SelectCustom";
 import degrees from "../utils/degrees";
 import { groupMonths, months } from "../utils/months";
 import articleshipStatuses from "../utils/articleshipStatuses";
-import years from "../utils/years";
+import years, { completionYears } from "../utils/years";
 import NumberInput from "../../../../../components/inputs/NumberInput";
 import StringInput from "../../../../../components/inputs/StringInput";
 import { withCookies } from "react-cookie";
@@ -217,7 +217,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, cookies, data }) => {
                       placeholder="Month"
                     />
                     <SelectCustom
-                      list={years}
+                      list={completionYears}
                       value={year}
                       onChange={setYear}
                       placeholder="Year"
