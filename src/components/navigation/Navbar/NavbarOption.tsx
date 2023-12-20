@@ -21,14 +21,7 @@ const NavbarOption: React.FC<OptionProps> = ({
       flexDir={"column"}
       w={"full"}
       onClick={() => {
-        if (label === "Logout") {
-          console.log("logout here");
-
-          // navigate to  /logout
-          navigateMe(label, link);
-        } else {
-          // navigateMe(label, link);
-        }
+        navigateMe(label, link);
       }}
     >
       <Flex
