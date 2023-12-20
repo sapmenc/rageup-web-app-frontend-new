@@ -11,10 +11,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { RAGE_UP_RED, RAGE_UP_RED_HOVER } from "../../../../foundations/colors";
 import { withCookies } from "react-cookie";
 import { updateApplicantByVacancyId} from "../../../../api/vacancy";
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 interface ApplyCardProps {
   // eslint-disable-next-line
@@ -23,23 +26,6 @@ interface ApplyCardProps {
   cookies: any;
 }
 
-const onApply = async(vId:any,uId:any) => {
-  try{
-    let body={
-      uId: uId
-    }
-    let res = await updateApplicantByVacancyId(vId,body);
-    console.log(res)
-  }catch(err){
-    console.log(err)
-  }
-};
-
-const onStartTest = (vId:any,uId:any) => {
-  console.log("test started");
-  // applied at the end
-  onApply(vId,uId);
-};
 
 const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
   const { data, vacancyId, cookies } = props;
@@ -50,6 +36,32 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
   // const authToken = cookies?.cookies?.authToken;
   const isTestAssigned = data.isTestAssigned as boolean;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  dayjs.extend(relativeTime)
+  const toast = useToast();
+  const onApply = async(vId:any,uId:any) => {
+    try{
+      let body={
+        uId: uId
+      }
+      let res = await updateApplicantByVacancyId(vId,body);
+      console.log(res)
+      toast({
+        title: "Success",
+        position: "top-right",
+        description: "Applied Successfully!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }catch(err){
+      console.log(err)
+    }
+  };
+  const onStartTest = (vId:any,uId:any) => {
+    console.log("test started");
+    // applied at the end
+    onApply(vId,uId);
+  };
   return (
     <>
       {isTestAssigned && isOpen && (
@@ -106,9 +118,9 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
           }}
         >
           <Flex flexDir={"column"} w={"100%"} gap={2}>
-            <Text> Kothrud, Pune</Text>
-            <Text>32 Applicants</Text>
-            <Text>2 days ago</Text>
+            <Text> {data?.location}</Text>
+            <Text>{data?.applicants.length} Applicants</Text>
+            <Text>{dayjs(data?.createdAt).fromNow()}</Text>
           </Flex>
           {/* Apply button */}
           <Flex
