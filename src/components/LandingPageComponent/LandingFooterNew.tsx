@@ -8,8 +8,8 @@ import rageupIcon from "../../assets/landing-page/rageup-footer-logo-new.png";
 import { RAGE_UP_RED } from "../../foundations/colors";
 import {
   PRIVACY_POLICY,
-//   REFUND_POLICY,
-//   TERMS_AND_CONDITIONS,
+  REFUND_POLICY,
+  TERMS_AND_CONDITIONS,
 } from "../../routes/routeNames";
 
 const LandingFooterNew = () => {
@@ -101,7 +101,19 @@ const LandingFooterNew = () => {
               gap={3}
             >
               <Flex gap={5}>
-                {/* <Link
+              <Link
+                  href={PRIVACY_POLICY}
+                  _hover={{ textDecor: "underline white" }}
+                >
+                  <Text
+                    color={"white"}
+                    align={["center", "center", "center"]}
+                    mb={"5px"}
+                  >
+                    Privacy Policy
+                  </Text>
+                </Link>
+                <Link
                   href={TERMS_AND_CONDITIONS}
                   _hover={{ textDecor: "underline white" }}
                 >
@@ -112,8 +124,8 @@ const LandingFooterNew = () => {
                   >
                     Terms and Conditions
                   </Text>
-                </Link> */}
-                {/* <Link
+                </Link>
+                <Link
                   href={REFUND_POLICY}
                   _hover={{ textDecor: "underline white" }}
                 >
@@ -123,18 +135,6 @@ const LandingFooterNew = () => {
                     mb={"5px"}
                   >
                     Refund Policy
-                  </Text>
-                </Link> */}
-                <Link
-                  href={PRIVACY_POLICY}
-                  _hover={{ textDecor: "underline white" }}
-                >
-                  <Text
-                    color={"white"}
-                    align={["center", "center", "center"]}
-                    mb={"5px"}
-                  >
-                    Privacy Policy
                   </Text>
                 </Link>
               </Flex>
