@@ -29,12 +29,13 @@ const MentorCard: React.FC<MentorCardProps> = ({
   console.log("mentor id", mentorId);
   const navigate = useNavigate();
   return (
-    <Card maxW="md">
+    <Card maxW="md"
+    cursor={"pointer"}      
+    onClick={() => {
+      navigate(`/mentorships/mentor/${mentorId}`);
+    }}
+    >
       <CardHeader
-        cursor={"pointer"}
-        onClick={() => {
-          navigate(`/mentorships/mentor/${mentorId}`);
-        }}
       >
         <Flex gap="4" alignItems={"center"} w={"100%"}>
           <Flex flex="1" gap={4} alignItems="center" flexWrap="wrap" w={"100%"}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardLayout from "../../../../layouts/CardLayout";
 import {
   Button,
@@ -18,6 +18,7 @@ import { withCookies } from "react-cookie";
 import { updateApplicantByVacancyId} from "../../../../api/vacancy";
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { getUserById } from "../../../../api/user";
 
 interface ApplyCardProps {
   // eslint-disable-next-line
@@ -33,9 +34,10 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
     ? JSON.parse(cookies.cookies.user)
     : undefined;
   const userId = user?._id;
-  // const authToken = cookies?.cookies?.authToken;
+  const authToken = cookies?.cookies?.authToken;
   const isTestAssigned = data.isTestAssigned as boolean;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [userData,setUserData] = useState<any>(null)
   dayjs.extend(relativeTime)
   const toast = useToast();
   const onApply = async(vId:any,uId:any) => {
@@ -62,6 +64,15 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
     // applied at the end
     onApply(vId,uId);
   };
+  useEffect(() => {
+    getUserById(userId, authToken)
+      .then(function (response) {
+        setUserData(response?.data?.data);
+      })
+      .catch(function (error) {
+        console.log("Error in user data fetch:", error);
+      });
+  }, []);
   return (
     <>
       {isTestAssigned && isOpen && (
@@ -141,18 +152,20 @@ const ApplyCard: React.FC<ApplyCardProps> = (props: ApplyCardProps) => {
               size={"md"}
               rounded={"full"}
               fontSize={"lg"}
-              backgroundColor={RAGE_UP_RED}
+              backgroundColor={userData?.appliedVacancies?.includes(data?._id)?"green":RAGE_UP_RED}
               color={"white"}
-              _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
+              _hover={{ backgroundColor: userData?.appliedVacancies?.includes(data?._id)?"green":RAGE_UP_RED_HOVER }}
               onClick={() => {
-                if (isTestAssigned) {
-                  setIsOpen(true);
-                } else {
-                  onApply(vacancyId,userId);
+                if(!userData?.appliedVacancies?.includes(data?._id)){
+                  if (isTestAssigned) {
+                    setIsOpen(true);
+                  } else {
+                    onApply(vacancyId,userId);
+                  }
                 }
               }}
             >
-              Apply
+              {userData?.appliedVacancies?.includes(data?._id)?"Applied":"Apply"}
             </Button>
           </Flex>
         </Flex>

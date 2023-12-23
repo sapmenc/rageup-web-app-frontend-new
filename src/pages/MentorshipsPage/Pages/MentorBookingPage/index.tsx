@@ -166,7 +166,7 @@ const MentorBookingPage = (props: any) => {
                     _hover={{ backgroundColor: RAGE_UP_RED_HOVER }}
                     onClick={onProceedToPay}
                   >
-                    <Text>Proceed to pay</Text>
+                    <Text>Book Now</Text>
                   </Button>
                 )}
               </Flex>
