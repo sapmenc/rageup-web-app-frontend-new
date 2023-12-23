@@ -17,12 +17,17 @@ import { getAllMentors } from "../../api/mentor";
 import { useEffect, useState } from "react";
 import FieldCheckLayout from "../../layouts/FieldCheckLayout";
 import useAuth from "../../hooks/useAuth";
+import { getBookingByUserId } from "../../api/booking";
+import { withCookies } from "react-cookie";
 
-const MentorshipsPage = () => {
+
+const MentorshipsPage = (props:any) => {
   useAuth();
   const toast = useToast();
+  const userId = props.cookies.get("user")?._id;
   // eslint-disable-next-line
   const [mentors, setMentors] = useState<any[]>([]);
+  const [bookings,setBookings] = useState<any[]>([])
   const [, setLoading] = useState(false);
   const { setTitle } = useTitle();
   setTitle("RageUp - Mentorship");
@@ -46,6 +51,13 @@ const MentorshipsPage = () => {
   useEffect(() => {
     fetchMentors();
   }, []);
+  useEffect(()=>{
+    getBookingByUserId(userId).then(function(res){
+      setBookings(res.data.data);
+    }).catch(function(error){
+      console.log("Error in fetching bookings by userId: ", error);
+    })
+  },[])
   return (
     <PageLayout>
       <FieldCheckLayout>
@@ -89,9 +101,9 @@ const MentorshipsPage = () => {
                   lg: "repeat(2, 1fr)",
                 }}
               >
-                {mentors.map((mentor) => {
+                {mentors.map((mentor,key) => {
                   return (
-                    <GridItem display={"flex"} justifyContent={"center"}>
+                    <GridItem display={"flex"} justifyContent={"center"} id={`${key}`}>
                       <MentorCard
                         mentorId={mentor._id}
                         mentorName={mentor?.mentorName || ""}
@@ -113,10 +125,10 @@ const MentorshipsPage = () => {
                   lg: "repeat(2, 1fr)",
                 }}
               >
-                {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => {
+                {bookings?.map((book,key) => {
                   return (
-                    <GridItem display={"flex"} justifyContent={"center"}>
-                      <SessionCard />
+                    <GridItem w='100%' display={"flex"} justifyContent={"center"} id={`${key}`}>
+                      <SessionCard mentorId={book?.mentor||""} slot={book?.slot||""} />
                     </GridItem>
                   );
                 })}
@@ -129,4 +141,4 @@ const MentorshipsPage = () => {
   );
 };
 
-export default MentorshipsPage;
+export default withCookies(MentorshipsPage);

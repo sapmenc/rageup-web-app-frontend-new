@@ -26,7 +26,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
   strengths,
   mentorId,
 }) => {
-  console.log("mentor id", mentorId);
+  // console.log("mentor id", mentorId);
   const navigate = useNavigate();
   return (
     <Card maxW="md"

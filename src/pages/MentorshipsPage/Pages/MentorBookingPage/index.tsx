@@ -16,6 +16,7 @@ import { getMentorById } from "../../../../api/mentor";
 import { useLocation } from "react-router-dom";
 import { getUserById } from "../../../../api/user";
 import { withCookies } from "react-cookie";
+import { getAvailableSlotsById} from "../../../../api/booking";
 
 const MentorBookingPage = (props: any) => {
   useAuth();
@@ -29,6 +30,7 @@ const MentorBookingPage = (props: any) => {
   const route = pageLocation.pathname;
   const mentorId = route.split("/")[3];
   const [userData, setUserData] = useState<any>(null);
+  const [availableSlots,setAvailableSlots] = useState<any[]>([])
 
   const onProceedToPay = () => {
     setIsPaymentModalOpen(true);
@@ -69,6 +71,14 @@ const MentorBookingPage = (props: any) => {
         console.log("Error in user data fetch:", error);
       });
   }, []);
+  useEffect(()=>{
+    getAvailableSlotsById(mentorId).then(function(res){
+      setAvailableSlots(res.data.data);
+      console.log(res.data.data)
+    }).catch(function(error){
+      console.log("Error while fetching Available Slots: ", error)
+    })
+  },[])
   useEffect(() => {
     // make query to get mentor session price
     setPrice(500);
@@ -86,10 +96,11 @@ const MentorBookingPage = (props: any) => {
         <>
           {isPaymentModalOpen && (
             <PaymentModal
+              userID={userId}
               mentorID={data?._id || ""}
               userNameProps={userName}
               userEmailProps={userEmail}
-              slots={data?.slots}
+              slots={availableSlots}
               isOpen={isPaymentModalOpen}
               onClose={() => {
                 setIsPaymentModalOpen(false);
